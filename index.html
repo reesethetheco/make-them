@@ -327,128 +327,42 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   font-weight: 700; letter-spacing: .04em; text-align: center; padding: 3px;
 }
 
-/* PRIORITIES BLOCK */
-.priorities-block { background: var(--surface); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow); border-left: 3px solid var(--accent); }
-.priorities-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.priorities-eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
-.priorities-edit-btn { background: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 3px 10px; font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--fg2); cursor: pointer; transition: all .15s; }
-.priorities-edit-btn:hover { border-color: var(--accent); color: var(--accent); }
-.priorities-edit-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-.priority-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
-.priority-row:last-child { border-bottom: none; padding-bottom: 0; }
-.priority-row:first-child { padding-top: 0; }
-.priority-num { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--accent); width: 20px; flex-shrink: 0; line-height: 1; }
-.priority-text { flex: 1; font-size: 0.88rem; font-weight: 500; color: var(--fg); line-height: 1.3; }
-.priority-text.empty { color: var(--fg2); font-style: italic; font-weight: 400; }
-.priority-text.done-text { text-decoration: line-through; opacity: .45; }
-.priority-check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s; font-size: 0.75rem; color: #fff; }
-.priority-check.done { background: var(--accent); border-color: var(--accent); }
-.priority-input { flex: 1; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; padding: 6px 10px; font-family: var(--font-body); font-size: 0.85rem; color: var(--fg); outline: none; }
-.priority-input:focus { border-color: var(--accent); }
 
 /* CALENDAR PAGE */
-#page-calendar { padding: 16px max(16px, env(safe-area-inset-left, 0px)); padding-bottom: calc(var(--nav-h) + 24px); }
-.week-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.week-nav h2 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; }
-.week-nav button { background: var(--surface2); border: none; border-radius: 8px; width: 34px; height: 34px; font-size: 1rem; cursor: pointer; color: var(--fg); transition: background .15s; }
-.week-nav button:hover { background: var(--border); }
-.days-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 16px; }
-.day-chip { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px; border-radius: 12px; cursor: pointer; transition: background .15s; }
-.day-chip:hover { background: var(--surface2); }
-.day-chip.today { background: var(--accent); color: #fff; }
-.day-chip.selected:not(.today) { background: var(--surface2); outline: 2px solid var(--accent); }
-.day-name { font-size: 0.62rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; opacity: .7; }
-.day-num { font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-.dot-row { display: flex; gap: 2px; min-height: 5px; }
-.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent2); }
-.day-tasks-label { font-size: 0.72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--fg2); margin-bottom: 10px; }
-.day-task-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-.day-task-card { background: var(--surface); border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); }
-.day-task-emoji { font-size: 1.4rem; line-height: 1; }
-.day-task-info { flex: 1; min-width: 0; }
-.day-task-title { font-weight: 600; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.day-task-sub { font-size: 0.72rem; color: var(--fg2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.day-task-done { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s; font-size: 0.7rem; color: #fff; }
-.day-task-done.done { background: var(--check); border-color: var(--check); }
-
-.week-summary { background: var(--surface); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
-.week-summary h3 { font-family: var(--font-display); font-size: 0.95rem; margin-bottom: 12px; }
-.stats-row { display: flex; gap: 10px; }
-.stat-box { flex: 1; background: var(--surface2); border-radius: 12px; padding: 12px 10px; text-align: center; }
-.stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
-.stat-label { font-size: 0.68rem; color: var(--fg2); margin-top: 3px; }
-.streak-row { display: flex; gap: 4px; margin-top: 14px; }
-.streak-day { flex: 1; height: 32px; border-radius: 6px; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 600; color: var(--fg2); position: relative; overflow: hidden; }
-.streak-day .fill { position: absolute; bottom: 0; left: 0; right: 0; background: var(--accent); opacity: .7; transition: height .4s ease; }
-.streak-day .lbl { position: relative; z-index: 1; }
-
-/* WEEKLY REVIEW */
-.weekly-review {
-  margin-top: 20px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-.wr-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 16px 0;
-  cursor: pointer;
-}
-.wr-title-row { display: flex; align-items: center; gap: 10px; }
-.wr-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; }
-.wr-badge {
-  font-size: 0.65rem; font-weight: 700; background: var(--accent2);
-  color: #fff; border-radius: 20px; padding: 2px 8px; letter-spacing: .03em;
-}
-.wr-chevron { color: var(--fg2); font-size: 0.85rem; transition: transform .25s; }
-.wr-chevron.open { transform: rotate(180deg); }
-.wr-body { padding: 0 16px 16px; }
-.wr-desc {
-  font-size: 0.78rem; color: var(--fg2); line-height: 1.5;
-  margin: 10px 0 16px; padding-bottom: 14px;
-  border-bottom: 1px solid var(--border);
-}
-.wr-progress { display: flex; gap: 3px; margin-bottom: 16px; }
-.wr-prog-seg { flex: 1; height: 4px; border-radius: 2px; background: var(--border); transition: background .3s; }
-.wr-prog-seg.done { background: var(--accent); }
-
-.wr-steps { display: flex; flex-direction: column; gap: 14px; }
-.wr-step { }
-.wr-step-header {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
-  cursor: pointer;
-}
-.wr-step-num {
-  width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.72rem; font-weight: 700; color: var(--fg2); flex-shrink: 0;
-  transition: all .2s;
-}
-.wr-step-num.done { background: var(--accent); border-color: var(--accent); color: #fff; }
-.wr-step-name { font-size: 0.82rem; font-weight: 700; flex: 1; }
-.wr-step-sub { font-size: 0.72rem; color: var(--fg2); }
-.wr-step-body { padding-left: 36px; display: flex; flex-direction: column; gap: 6px; }
-.wr-check-row { display: flex; align-items: flex-start; gap: 8px; font-size: 0.78rem; color: var(--fg2); line-height: 1.4; cursor: pointer; }
-.wr-check-row input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; accent-color: var(--accent); width: 14px; height: 14px; }
-.wr-check-row.checked span { text-decoration: line-through; opacity: .5; }
-.wr-notes {
-  width: 100%; margin-top: 8px; background: var(--surface2);
-  border: 1.5px solid var(--border); border-radius: 10px;
-  padding: 8px 10px; font-family: var(--font-body); font-size: 0.78rem;
-  color: var(--fg); outline: none; resize: none; height: 64px;
-  transition: border-color .15s;
-}
-.wr-notes:focus { border-color: var(--accent); }
-.wr-step-divider { height: 1px; background: var(--border); margin: 4px 0; }
-.wr-complete-btn {
-  width: 100%; background: var(--accent); color: #fff; border: none;
-  border-radius: 12px; padding: 12px; font-family: var(--font-body);
-  font-size: 0.88rem; font-weight: 600; cursor: pointer; margin-top: 16px;
-  transition: opacity .15s;
-}
-.wr-complete-btn:hover { opacity: .85; }
-.wr-complete-btn.completed { background: var(--surface2); color: var(--fg2); }
+#page-calendar { padding: 16px max(16px, env(safe-area-inset-left, 0px)); padding-bottom: calc(var(--nav-h) + 24px); display: flex; flex-direction: column; gap: 16px; }
+.cal-month-nav { display: flex; align-items: center; justify-content: space-between; }
+.cal-month-label { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; }
+.cal-nav-btn { background: var(--surface2); border: none; border-radius: 8px; width: 34px; height: 34px; font-size: 1.1rem; cursor: pointer; color: var(--fg); transition: background .15s; }
+.cal-nav-btn:hover { background: var(--border); }
+.cal-dow-row { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.65rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--fg2); margin-bottom: 4px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.82rem; font-weight: 600; font-variant-numeric: tabular-nums; position: relative; cursor: default; }
+.cal-cell.other-month { opacity: .3; }
+.cal-cell.today { background: var(--accent); color: #fff; }
+.cal-cell.has-plan::after, .cal-cell.has-reflect::before { content: ''; position: absolute; bottom: 3px; width: 4px; height: 4px; border-radius: 50%; }
+.cal-cell.has-plan::after { background: var(--accent2); right: calc(50% + 2px); }
+.cal-cell.has-reflect::before { background: var(--check); left: calc(50% + 2px); }
+.cal-cell.has-plan.has-reflect::after { right: calc(50% + 3px); }
+.cal-cell.has-plan.has-reflect::before { left: calc(50% + 3px); }
+.cal-week-section { display: flex; flex-direction: column; gap: 12px; }
+.cal-week-heading { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--fg2); text-transform: uppercase; letter-spacing: .05em; }
+.cal-card { background: var(--surface); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
+.cal-card-header { display: flex; align-items: center; justify-content: space-between; }
+.cal-card-title-row { display: flex; align-items: center; gap: 8px; }
+.cal-card-icon { font-size: 1.1rem; }
+.cal-card-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; }
+.cal-done-pill { border: none; border-radius: 20px; padding: 5px 12px; font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all .15s; background: var(--surface2); color: var(--fg2); }
+.cal-done-pill.done { background: var(--check); color: #fff; }
+.cal-card-sub { font-size: 0.78rem; color: var(--fg2); margin: 0; }
+.cal-goals { display: flex; flex-direction: column; gap: 8px; }
+.cal-goal-row { display: flex; align-items: center; gap: 8px; }
+.cal-goal-num { font-size: 0.72rem; font-weight: 700; color: var(--accent); min-width: 14px; }
+.cal-goal-input { flex: 1; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; padding: 8px 10px; font-family: var(--font-body); font-size: 0.82rem; color: var(--fg); outline: none; transition: border-color .15s; }
+.cal-goal-input:focus { border-color: var(--accent); }
+.cal-reflect-fields { display: flex; flex-direction: column; gap: 10px; }
+.cal-reflect-field label { display: block; font-size: 0.72rem; font-weight: 600; color: var(--fg2); margin-bottom: 4px; }
+.cal-reflect-field textarea { width: 100%; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; padding: 8px 10px; font-family: var(--font-body); font-size: 0.82rem; color: var(--fg); outline: none; resize: none; height: 64px; transition: border-color .15s; box-sizing: border-box; }
+.cal-reflect-field textarea:focus { border-color: var(--accent); }
 </style>
 
 <div id="app">
@@ -464,46 +378,45 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   </div>
 
   <div id="page-calendar" class="page">
-    <div class="priorities-block">
-      <div class="priorities-header">
-        <span class="priorities-eyebrow">today's focus</span>
-        <button class="priorities-edit-btn" onclick="togglePrioritiesEdit()" id="pri-edit-btn">Edit</button>
-      </div>
-      <div id="priorities-list"></div>
+    <!-- MONTH CALENDAR -->
+    <div class="cal-month-nav">
+      <button class="cal-nav-btn" onclick="shiftMonth(-1)">‹</button>
+      <span class="cal-month-label" id="cal-month-label"></span>
+      <button class="cal-nav-btn" onclick="shiftMonth(1)">›</button>
     </div>
-
-    <div class="week-nav">
-      <button onclick="shiftWeek(-1)">‹</button>
-      <h2 id="week-label"></h2>
-      <button onclick="shiftWeek(1)">›</button>
+    <div class="cal-dow-row">
+      <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
     </div>
-    <div class="days-row" id="days-row"></div>
-    <div class="day-tasks-label" id="day-tasks-label"></div>
-    <div class="day-task-list" id="day-task-list"></div>
+    <div class="cal-grid" id="cal-grid"></div>
 
-    <div class="week-summary">
-      <h3>This week at a glance</h3>
-      <div class="stats-row">
-        <div class="stat-box"><div class="stat-num" id="stat-done">0</div><div class="stat-label">tasks done</div></div>
-        <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-label">total tasks</div></div>
-        <div class="stat-box"><div class="stat-num" id="stat-streak">0</div><div class="stat-label">day streak</div></div>
-      </div>
-      <div class="streak-row" id="streak-row"></div>
-    </div>
+    <!-- SELECTED WEEK DETAILS -->
+    <div class="cal-week-section" id="cal-week-section">
+      <div class="cal-week-heading" id="cal-week-heading"></div>
 
-    <div class="weekly-review" id="weekly-review">
-      <div class="wr-header" onclick="toggleWR()">
-        <div class="wr-title-row">
-          <span class="wr-title">Weekly Review</span>
-          <span class="wr-badge" id="wr-badge">0/5</span>
+      <!-- WEEKLY PLAN -->
+      <div class="cal-card" id="cal-plan-card">
+        <div class="cal-card-header">
+          <div class="cal-card-title-row">
+            <span class="cal-card-icon">🎯</span>
+            <span class="cal-card-title">Weekly Plan</span>
+          </div>
+          <button class="cal-done-pill" id="plan-done-btn" onclick="togglePlanDone()">Mark done</button>
         </div>
-        <span class="wr-chevron" id="wr-chevron">▾</span>
+        <p class="cal-card-sub">What do you want to accomplish this week?</p>
+        <div class="cal-goals" id="cal-goals"></div>
       </div>
-      <div class="wr-body" id="wr-body" hidden>
-        <p class="wr-desc">A 15-minute ritual to close the week, clear your head, and set yourself up for the next one. Work through each step.</p>
-        <div class="wr-progress" id="wr-progress"></div>
-        <div class="wr-steps" id="wr-steps"></div>
-        <button class="wr-complete-btn" id="wr-complete-btn" onclick="markWRComplete()">Mark week as reviewed ✓</button>
+
+      <!-- WEEKLY REFLECTION -->
+      <div class="cal-card" id="cal-reflect-card">
+        <div class="cal-card-header">
+          <div class="cal-card-title-row">
+            <span class="cal-card-icon">🌿</span>
+            <span class="cal-card-title">Weekly Reflection</span>
+          </div>
+          <button class="cal-done-pill" id="reflect-done-btn" onclick="toggleReflectDone()">Mark done</button>
+        </div>
+        <p class="cal-card-sub">Close out the week honestly.</p>
+        <div class="cal-reflect-fields" id="cal-reflect-fields"></div>
       </div>
     </div>
   </div>
@@ -627,21 +540,16 @@ const SCENES = ['forest','ocean','mountain','meadow','wetland','desert','arctic'
 const CAL_ICONS = ['🌲','🌊','🏔','🌸','🌿','🏜','❄️','💧'];
 
 let projects = [];
-let calDayDone = {};
-let selectedDay = null;
-let weekOffset = 0;
 
 function loadData() {
   try {
     const p = localStorage.getItem('pf_projects'); if (p) projects = JSON.parse(p);
-    const d = localStorage.getItem('pf_done'); if (d) calDayDone = JSON.parse(d);
   } catch(e) {}
   if (!projects.length) seedData();
 }
 function saveData() {
   try {
     localStorage.setItem('pf_projects', JSON.stringify(projects));
-    localStorage.setItem('pf_done', JSON.stringify(calDayDone));
   } catch(e) {}
 }
 function seedData() {
@@ -1223,252 +1131,150 @@ function saveProject() {
 }
 document.getElementById('modal').addEventListener('click', e => { if (e.target === document.getElementById('modal')) closeModal(); });
 
-// ── PRIORITIES ───────────────────────────────────────────────────────────────
-
-let priorities = { text:['','',''], done:[false,false,false] };
-let prioritiesEditing = false;
-
-function loadPriorities() {
-  try { const p = localStorage.getItem('pf_priorities'); if (p) priorities = JSON.parse(p); } catch(e) {}
-}
-function savePriorities() {
-  try { localStorage.setItem('pf_priorities', JSON.stringify(priorities)); } catch(e) {}
-}
-function renderPriorities() {
-  const el = document.getElementById('priorities-list');
-  const btn = document.getElementById('pri-edit-btn');
-  btn.textContent = prioritiesEditing ? 'Done' : 'Edit';
-  btn.className = 'priorities-edit-btn' + (prioritiesEditing ? ' active' : '');
-  el.innerHTML = [0,1,2].map(i => {
-    const text = priorities.text[i] || '', done = priorities.done[i];
-    if (prioritiesEditing) return `<div class="priority-row"><span class="priority-num">${i+1}</span><input class="priority-input" type="text" value="${esc(text)}" placeholder="Add a priority…" oninput="updatePriorityText(${i},this.value)" maxlength="80"></div>`;
-    return `<div class="priority-row"><span class="priority-num">${i+1}</span><span class="priority-text${text?(done?' done-text':''):' empty'}">${text?esc(text):'tap Edit to add…'}</span>${text?`<button class="priority-check${done?' done':''}" onclick="togglePriorityDone(${i})">${done?'✓':''}</button>`:''}</div>`;
-  }).join('');
-}
-function togglePrioritiesEdit() { prioritiesEditing = !prioritiesEditing; renderPriorities(); }
-function updatePriorityText(i, val) { priorities.text[i] = val; savePriorities(); }
-function togglePriorityDone(i) { priorities.done[i] = !priorities.done[i]; savePriorities(); renderPriorities(); }
-
 // ── CALENDAR ─────────────────────────────────────────────────────────────────
 
-function getWeekDates(offset) {
-  const today = new Date();
-  const dow = today.getDay();
-  const mon = new Date(today);
-  mon.setDate(today.getDate() - dow + 1 + offset * 7);
-  return Array.from({length:7},(_,i)=>{ const d=new Date(mon); d.setDate(mon.getDate()+i); return d; });
+let calMonthOffset = 0;
+
+function calDateKey(d) { return d.toISOString().slice(0,10); }
+
+function getWeekKey(dateKey) {
+  const d = new Date(dateKey + 'T00:00:00');
+  const dow = (d.getDay() + 6) % 7; // Mon=0
+  const mon = new Date(d);
+  mon.setDate(d.getDate() - dow);
+  return calDateKey(mon);
 }
-function fmtKey(date) { return date.toISOString().slice(0,10); }
+
+function loadWeekData(weekKey) {
+  try { const d = localStorage.getItem('pf_week_' + weekKey); return d ? JSON.parse(d) : null; } catch(e) { return null; }
+}
+function saveWeekData(weekKey, data) {
+  try { localStorage.setItem('pf_week_' + weekKey, JSON.stringify(data)); } catch(e) {}
+}
+function defaultWeekData() {
+  return { goals: ['','',''], goalsDone: false, reflect: { well: '', didnt: '', next: '' }, reflectDone: false };
+}
+
+function shiftMonth(dir) {
+  calMonthOffset += dir;
+  renderCalendar();
+}
 
 function renderCalendar() {
-  const days = getWeekDates(weekOffset);
-  const today = fmtKey(new Date());
-  const DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  if (!selectedDay) selectedDay = today;
+  const today = new Date();
+  const viewDate = new Date(today.getFullYear(), today.getMonth() + calMonthOffset, 1);
+  const year = viewDate.getFullYear(), month = viewDate.getMonth();
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month-label').textContent = `${MONTHS[month]} ${year}`;
 
-  const allSubs = projects.flatMap(p => p.subtasks.map(s => ({...s, projId:p.id, projTitle:p.title, cat:p.cat, sceneIdx:p.scene??p.id%8})));
-  const totalSubs = allSubs.length;
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const startDow = (firstDay.getDay() + 6) % 7; // Mon=0
+  const todayKey = calDateKey(today);
 
-  document.getElementById('days-row').innerHTML = days.map((d,i) => {
-    const key = fmtKey(d), isToday = key===today, isSel = key===selectedDay;
-    const dots = Math.min(allSubs.filter(s => calDayDone[`${key}-${s.projId}-${s.id}`]).length, 3);
-    return `<div class="day-chip${isToday?' today':isSel?' selected':''}" onclick="selectDay('${key}')">
-      <span class="day-name">${DAY_NAMES[i]}</span>
-      <span class="day-num">${d.getDate()}</span>
-      <div class="dot-row">${'<div class="dot"></div>'.repeat(dots)}</div>
-    </div>`;
-  }).join('');
-
-  const selDate = new Date(selectedDay+'T00:00:00');
-  document.getElementById('day-tasks-label').textContent = selDate.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
-
-  document.getElementById('day-task-list').innerHTML = projects.flatMap(proj =>
-    proj.subtasks.map(st => {
-      const key = `${selectedDay}-${proj.id}-${st.id}`, isDone = calDayDone[key]||false;
-      return `<div class="day-task-card">
-        <div class="day-task-emoji">${CAL_ICONS[(proj.scene??proj.id%8)%8]}</div>
-        <div class="day-task-info"><div class="day-task-title">${esc(st.text)}</div><div class="day-task-sub">${esc(proj.title)}</div></div>
-        <button class="day-task-done${isDone?' done':''}" onclick="toggleCalDone('${selectedDay}',${proj.id},${st.id})">${isDone?'✓':''}</button>
-      </div>`;
-    })
-  ).join('');
-
-  const weekKeys = days.map(fmtKey);
-  let weekDone = 0, weekTotal = 0;
-  weekKeys.forEach(k => allSubs.forEach(s => { weekTotal++; if(calDayDone[`${k}-${s.projId}-${s.id}`]) weekDone++; }));
-
-  let streak = 0;
-  const todayD = new Date();
-  for (let i=0;i<30;i++) {
-    const d=new Date(todayD); d.setDate(todayD.getDate()-i);
-    if (allSubs.some(s=>calDayDone[`${fmtKey(d)}-${s.projId}-${s.id}`])) streak++;
-    else if (i>0) break;
+  const cells = [];
+  // leading blanks from previous month
+  const prevLast = new Date(year, month, 0);
+  for (let i = startDow - 1; i >= 0; i--) {
+    const d = new Date(year, month - 1, prevLast.getDate() - i);
+    cells.push({ d, other: true });
+  }
+  for (let day = 1; day <= lastDay.getDate(); day++) {
+    cells.push({ d: new Date(year, month, day), other: false });
+  }
+  // trailing blanks
+  while (cells.length % 7 !== 0) {
+    const last = cells[cells.length-1].d;
+    cells.push({ d: new Date(last.getFullYear(), last.getMonth(), last.getDate()+1), other: true });
   }
 
-  document.getElementById('stat-done').textContent = weekDone;
-  document.getElementById('stat-total').textContent = totalSubs;
-  document.getElementById('stat-streak').textContent = streak;
-
-  document.getElementById('streak-row').innerHTML = days.map((d,i) => {
-    const k=fmtKey(d), dc=allSubs.filter(s=>calDayDone[`${k}-${s.projId}-${s.id}`]).length;
-    const pct = totalSubs ? Math.round(dc/allSubs.length*100) : 0;
-    return `<div class="streak-day"><div class="fill" style="height:${pct}%"></div><span class="lbl">${DAY_NAMES[i][0]}</span></div>`;
+  document.getElementById('cal-grid').innerHTML = cells.map(({d, other}) => {
+    const key = calDateKey(d);
+    const wk = getWeekKey(key);
+    const wdata = loadWeekData(wk) || defaultWeekData();
+    const hasPlan = wdata.goals.some(g => g.trim());
+    const hasReflect = wdata.reflect.well.trim() || wdata.reflect.didnt.trim() || wdata.reflect.next.trim();
+    const isToday = key === todayKey;
+    let cls = 'cal-cell';
+    if (other) cls += ' other-month';
+    if (isToday) cls += ' today';
+    if (hasPlan) cls += ' has-plan';
+    if (hasReflect) cls += ' has-reflect';
+    return `<div class="${cls}">${d.getDate()}</div>`;
   }).join('');
 
-  const fmt = d => d.toLocaleDateString(undefined,{month:'short',day:'numeric'});
-  document.getElementById('week-label').textContent = `${fmt(days[0])} – ${fmt(days[6])}`;
-
-  renderWeeklyReview();
+  // Render week section for current/selected week
+  const wk = getWeekKey(todayKey);
+  renderWeekSection(wk);
 }
 
-function selectDay(key) { selectedDay = key; renderCalendar(); }
-function shiftWeek(dir) { weekOffset += dir; renderCalendar(); }
-function toggleCalDone(day, projId, stId) { const key=`${day}-${projId}-${stId}`; calDayDone[key]=!calDayDone[key]; saveData(); renderCalendar(); }
-
-// ── WEEKLY REVIEW ─────────────────────────────────────────────────────────────
-
-const WR_STEPS = [
-  {
-    key: 'capture',
-    name: 'Capture',
-    sub: 'Get it all out of your head',
-    checks: [
-      'Write down any loose ideas, commitments, or tasks floating in your mind',
-      'Check your notes app, voice memos, and email drafts for anything to process',
-      'Collect any physical papers or receipts',
-    ],
-    notesPlaceholder: "What's been on your mind this week?"
-  },
-  {
-    key: 'clarify',
-    name: 'Clarify',
-    sub: "Process what you've captured",
-    checks: [
-      'Clear your email inbox to zero (or at least triage)',
-      'Decide on each captured item: do, delegate, defer, or delete',
-    ],
-    notesPlaceholder: 'Any decisions or clarifications to note?'
-  },
-  {
-    key: 'organize',
-    name: 'Organize',
-    sub: 'Put things where they belong',
-    checks: [
-      'Review all your projects — is everything up to date?',
-      'Add any new tasks to the right project cards above',
-      "Archive or close anything that's completed or no longer relevant",
-    ],
-    notesPlaceholder: 'What changed in your project list?'
-  },
-  {
-    key: 'reflect',
-    name: 'Reflect',
-    sub: 'Review your progress',
-    checks: [
-      'What went well this week? Celebrate the wins.',
-      "What didn't get done — and why? No judgment, just honest.",
-    ],
-    notesPlaceholder: 'Wins, lessons, anything worth noting…'
-  },
-  {
-    key: 'plan',
-    name: 'Plan',
-    sub: 'Set intentions for next week',
-    checks: [
-      'Choose your 3 focus priorities for next week (update them above)',
-      'Block time for your most important work',
-      "Identify anything you're dreading — and schedule it first",
-    ],
-    notesPlaceholder: 'What are you committing to next week?'
-  },
-];
-
-function getWRKey() {
-  const days = getWeekDates(weekOffset);
-  return 'wr-' + fmtKey(days[0]);
+function renderWeekSection(wk) {
+  const d = new Date(wk + 'T00:00:00');
+  const end = new Date(d); end.setDate(d.getDate() + 6);
+  const fmt = dt => dt.toLocaleDateString(undefined, {month:'short', day:'numeric'});
+  document.getElementById('cal-week-heading').textContent = `Week of ${fmt(d)} – ${fmt(end)}`;
+  renderWeekPlan(wk);
+  renderWeekReflect(wk);
 }
 
-function loadWRData() {
-  try { const d = localStorage.getItem(getWRKey()); return d ? JSON.parse(d) : null; } catch(e) { return null; }
-}
-function saveWRData(data) {
-  try { localStorage.setItem(getWRKey(), JSON.stringify(data)); } catch(e) {}
-}
-function defaultWRData() {
-  const sections = {};
-  WR_STEPS.forEach(s => { sections[s.key] = { checks: s.checks.map(()=>false), notes: '' }; });
-  return { sections, completed: false };
-}
-
-let wrOpen = false;
-
-function toggleWR() {
-  wrOpen = !wrOpen;
-  document.getElementById('wr-body').hidden = !wrOpen;
-  document.getElementById('wr-chevron').className = 'wr-chevron' + (wrOpen ? ' open' : '');
-}
-
-function renderWeeklyReview() {
-  const data = loadWRData() || defaultWRData();
-  const totalChecks = WR_STEPS.reduce((n,s) => n + s.checks.length, 0);
-  const doneChecks = WR_STEPS.reduce((n,s) => n + data.sections[s.key].checks.filter(Boolean).length, 0);
-  const stepsComplete = WR_STEPS.filter(s => data.sections[s.key].checks.every(Boolean)).length;
-
-  document.getElementById('wr-badge').textContent = `${stepsComplete}/${WR_STEPS.length}`;
-
-  document.getElementById('wr-progress').innerHTML = WR_STEPS.map(s =>
-    `<div class="wr-prog-seg${data.sections[s.key].checks.every(Boolean) ? ' done' : ''}"></div>`
+function renderWeekPlan(wk) {
+  const data = loadWeekData(wk) || defaultWeekData();
+  const btn = document.getElementById('plan-done-btn');
+  btn.textContent = data.goalsDone ? '✓ Done' : 'Mark done';
+  btn.className = 'cal-done-pill' + (data.goalsDone ? ' done' : '');
+  document.getElementById('cal-goals').innerHTML = [0,1,2].map(i =>
+    `<div class="cal-goal-row">
+      <span class="cal-goal-num">${i+1}</span>
+      <input class="cal-goal-input" type="text" value="${esc(data.goals[i]||'')}" placeholder="Goal ${i+1}…" oninput="saveGoal('${wk}',${i},this.value)" maxlength="120">
+    </div>`
   ).join('');
-
-  document.getElementById('wr-steps').innerHTML = WR_STEPS.map((step, si) => {
-    const sec = data.sections[step.key];
-    const stepDone = sec.checks.every(Boolean);
-    return `
-      <div class="wr-step">
-        <div class="wr-step-header">
-          <div class="wr-step-num${stepDone ? ' done' : ''}">${stepDone ? '✓' : si+1}</div>
-          <div>
-            <div class="wr-step-name">${step.name}</div>
-            <div class="wr-step-sub">${step.sub}</div>
-          </div>
-        </div>
-        <div class="wr-step-body">
-          ${step.checks.map((chk, ci) => `
-            <label class="wr-check-row${sec.checks[ci] ? ' checked' : ''}">
-              <input type="checkbox" ${sec.checks[ci] ? 'checked' : ''} onchange="toggleWRCheck('${step.key}',${ci},this.checked)">
-              <span>${chk}</span>
-            </label>
-          `).join('')}
-          <textarea class="wr-notes" placeholder="${step.notesPlaceholder}" oninput="saveWRNotes('${step.key}',this.value)">${esc(sec.notes)}</textarea>
-        </div>
-        ${si < WR_STEPS.length-1 ? '<div class="wr-step-divider"></div>' : ''}
-      </div>
-    `;
-  }).join('');
-
-  const btn = document.getElementById('wr-complete-btn');
-  btn.textContent = data.completed ? '✓ Week reviewed!' : 'Mark week as reviewed ✓';
-  btn.className = 'wr-complete-btn' + (data.completed ? ' completed' : '');
 }
 
-function toggleWRCheck(stepKey, ci, val) {
-  const data = loadWRData() || defaultWRData();
-  data.sections[stepKey].checks[ci] = val;
-  saveWRData(data);
-  renderWeeklyReview();
+function renderWeekReflect(wk) {
+  const data = loadWeekData(wk) || defaultWeekData();
+  const btn = document.getElementById('reflect-done-btn');
+  btn.textContent = data.reflectDone ? '✓ Done' : 'Mark done';
+  btn.className = 'cal-done-pill' + (data.reflectDone ? ' done' : '');
+  document.getElementById('cal-reflect-fields').innerHTML = [
+    { key: 'well', label: 'What went well?' },
+    { key: 'didnt', label: "What didn't go well?" },
+    { key: 'next', label: 'What are you taking into next week?' },
+  ].map(({key, label}) =>
+    `<div class="cal-reflect-field">
+      <label>${label}</label>
+      <textarea placeholder="…" oninput="saveReflect('${wk}','${key}',this.value)">${esc(data.reflect[key]||'')}</textarea>
+    </div>`
+  ).join('');
 }
 
-function saveWRNotes(stepKey, val) {
-  const data = loadWRData() || defaultWRData();
-  data.sections[stepKey].notes = val;
-  saveWRData(data);
+function saveGoal(wk, i, val) {
+  const data = loadWeekData(wk) || defaultWeekData();
+  data.goals[i] = val;
+  saveWeekData(wk, data);
+  renderCalendar();
 }
 
-function markWRComplete() {
-  const data = loadWRData() || defaultWRData();
-  data.completed = !data.completed;
-  saveWRData(data);
-  renderWeeklyReview();
+function saveReflect(wk, key, val) {
+  const data = loadWeekData(wk) || defaultWeekData();
+  data.reflect[key] = val;
+  saveWeekData(wk, data);
+  renderCalendar();
+}
+
+function togglePlanDone() {
+  const wk = getWeekKey(calDateKey(new Date()));
+  const data = loadWeekData(wk) || defaultWeekData();
+  data.goalsDone = !data.goalsDone;
+  saveWeekData(wk, data);
+  renderCalendar();
+}
+
+function toggleReflectDone() {
+  const wk = getWeekKey(calDateKey(new Date()));
+  const data = loadWeekData(wk) || defaultWeekData();
+  data.reflectDone = !data.reflectDone;
+  saveWeekData(wk, data);
+  renderCalendar();
 }
 
 // ── TABS ─────────────────────────────────────────────────────────────────────
@@ -1478,14 +1284,13 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   btn.classList.add('active');
-  if (name === 'calendar') { renderCalendar(); renderPriorities(); }
+  if (name === 'calendar') renderCalendar();
 }
 
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 loadData();
-loadPriorities();
 renderFeed();
 </script>
 </body>
