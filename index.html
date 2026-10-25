@@ -1,6 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f7f5f1">
 <title>Make Them</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
 
 <style>
 /* === TOKENS === */
@@ -34,10 +43,11 @@
   --border: #3a3733; --shadow: 0 2px 12px rgba(0,0,0,0.3); color-scheme: dark;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; font-family: var(--font-body); background: var(--bg); color: var(--fg); font-size: 15px; overscroll-behavior: none; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { height: 100%; }
+body { min-height: 100%; width: 100%; font-family: var(--font-body); background: var(--bg); color: var(--fg); font-size: 15px; overscroll-behavior: none; -webkit-text-size-adjust: 100%; }
 
-#app { display: flex; flex-direction: column; height: 100%; max-width: 520px; margin: 0 auto; position: relative; }
+#app { display: flex; flex-direction: column; min-height: 100dvh; width: 100%; max-width: 520px; margin: 0 auto; position: relative; }
 
 /* HEADER */
 .header {
@@ -56,11 +66,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .btn-add:hover { opacity: .85; }
 
 /* TABS */
-.tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 520px; z-index: 20; background: var(--surface); border-top: 1px solid var(--border); display: flex; padding-bottom: env(safe-area-inset-bottom, 0px); }
-.tab-btn { flex: 1; background: none; border: none; padding: 10px 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--fg2); font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; letter-spacing: .02em; transition: color .15s; }
+.tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 520px; z-index: 20; background: var(--surface); border-top: 1px solid var(--border); display: flex; padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px); }
+.tab-btn { flex: 1; background: none; border: none; padding: 12px 4px 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--fg2); font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; letter-spacing: .02em; transition: color .15s; min-height: 56px; }
 .tab-btn.active { color: var(--accent); }
 .tab-icon { font-size: 1.3rem; line-height: 1; }
-.page { display: none; flex: 1; overflow-y: auto; }
+.page { display: none; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .page.active { display: block; }
 
 /* FEED */
@@ -92,13 +102,14 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .subtask {
   display: flex; align-items: center; gap: 6px;
   font-size: 0.75rem; color: var(--fg2); line-height: 1.3;
-  padding: 3px 0; border-radius: 6px;
+  padding: 6px 0; border-radius: 6px;
   transition: background .1s;
+  touch-action: none;
 }
 .subtask.drag-over { background: var(--surface2); }
-.drag-handle { cursor: grab; color: var(--border); font-size: 0.8rem; flex-shrink: 0; padding: 0 2px; user-select: none; }
-.drag-handle:active { cursor: grabbing; }
-.subtask input[type="checkbox"] { margin: 0; flex-shrink: 0; width: 14px; height: 14px; accent-color: var(--check); cursor: pointer; }
+.drag-handle { cursor: grab; color: var(--border); font-size: 1rem; flex-shrink: 0; padding: 4px 6px; user-select: none; min-width: 28px; min-height: 28px; display: flex; align-items: center; justify-content: center; }
+.drag-handle:active { cursor: grabbing; color: var(--fg2); }
+.subtask input[type="checkbox"] { margin: 0; flex-shrink: 0; width: 18px; height: 18px; accent-color: var(--check); cursor: pointer; }
 .subtask.done .subtask-text { text-decoration: line-through; opacity: .5; }
 .subtask-text { flex: 1; }
 
@@ -492,7 +503,7 @@ function appendFeedBatch() {
     card.innerHTML = `
       <div class="card-art">
         <canvas id="cv-${uid}" width="${proj.wide ? 640 : 320}" height="${proj.wide ? 224 : 240}"></canvas>
-        <button class="card-art-edit" onclick="openScenePicker(${proj.id}, event)">✦ photo</button>
+        <button class="card-art-edit" onclick="openScenePicker(${proj.id}, event)" type="button">✦ photo</button>
       </div>
       <div class="card-body">
         <div class="card-tag">${TAGS[proj.cat] || '📌 Task'}</div>
@@ -523,7 +534,7 @@ function appendFeedBatch() {
 
 function renderSubtaskRows(proj, uid) {
   return proj.subtasks.map(s => `
-    <div class="subtask${s.done ? ' done' : ''}" draggable="true" data-sid="${s.id}">
+    <div class="subtask${s.done ? ' done' : ''}" data-sid="${s.id}">
       <span class="drag-handle" title="Drag to reorder">⠿</span>
       <input type="checkbox" ${s.done ? 'checked' : ''} onchange="toggleSubtask(${proj.id}, ${s.id}, this.checked)">
       <span class="subtask-text">${esc(s.text)}</span>
@@ -596,18 +607,69 @@ function toggleSubtask(projId, stId, checked) {
   renderCalendar();
 }
 
-// ── DRAG REORDER ─────────────────────────────────────────────────────────────
-
-let dragSrc = null;
+// ── DRAG/TOUCH REORDER ───────────────────────────────────────────────────────
 
 function setupDragDrop(container, projId) {
-  container.querySelectorAll('.subtask').forEach(row => {
+  container.querySelectorAll('.drag-handle').forEach(handle => {
+    const row = handle.closest('.subtask');
+
+    // Touch reorder
+    handle.addEventListener('touchstart', e => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      let lastY = touch.clientY;
+      let srcId = parseInt(row.dataset.sid);
+
+      row.style.opacity = '0.5';
+      container.querySelectorAll('.subtask').forEach(r => r.classList.remove('drag-over'));
+
+      const onMove = ev => {
+        ev.preventDefault();
+        const y = ev.touches[0].clientY;
+        const el = document.elementFromPoint(ev.touches[0].clientX, y);
+        const target = el && el.closest('.subtask');
+        container.querySelectorAll('.subtask').forEach(r => r.classList.remove('drag-over'));
+        if (target && target !== row) target.classList.add('drag-over');
+        lastY = y;
+      };
+      const onEnd = ev => {
+        row.style.opacity = '';
+        const over = container.querySelector('.subtask.drag-over');
+        container.querySelectorAll('.subtask').forEach(r => r.classList.remove('drag-over'));
+        if (over && over !== row) {
+          const dstId = parseInt(over.dataset.sid);
+          const proj = projects.find(p => p.id === projId);
+          if (proj) {
+            const si = proj.subtasks.findIndex(s => s.id === srcId);
+            const di = proj.subtasks.findIndex(s => s.id === dstId);
+            if (si !== -1 && di !== -1) {
+              const [moved] = proj.subtasks.splice(si, 1);
+              proj.subtasks.splice(di, 0, moved);
+              saveData();
+              refreshAllCards(projId);
+            }
+          }
+        }
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', onEnd);
+      };
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onEnd);
+    }, { passive: false });
+
+    // Mouse reorder (desktop fallback)
+    row.setAttribute('draggable', 'true');
     row.addEventListener('dragstart', e => {
-      dragSrc = row;
       e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', row.dataset.sid);
+      setTimeout(() => row.style.opacity = '0.5', 0);
+    });
+    row.addEventListener('dragend', () => {
+      row.style.opacity = '';
+      container.querySelectorAll('.subtask').forEach(r => r.classList.remove('drag-over'));
     });
     row.addEventListener('dragover', e => {
-      e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+      e.preventDefault();
       container.querySelectorAll('.subtask').forEach(r => r.classList.remove('drag-over'));
       row.classList.add('drag-over');
     });
@@ -615,9 +677,9 @@ function setupDragDrop(container, projId) {
     row.addEventListener('drop', e => {
       e.preventDefault();
       row.classList.remove('drag-over');
-      if (!dragSrc || dragSrc === row) return;
-      const srcId = parseInt(dragSrc.dataset.sid);
+      const srcId = parseInt(e.dataTransfer.getData('text/plain'));
       const dstId = parseInt(row.dataset.sid);
+      if (srcId === dstId) return;
       const proj = projects.find(p => p.id === projId);
       if (!proj) return;
       const si = proj.subtasks.findIndex(s => s.id === srcId);
@@ -628,7 +690,6 @@ function setupDragDrop(container, projId) {
       saveData();
       refreshAllCards(projId);
     });
-    row.addEventListener('dragend', () => { container.querySelectorAll('.subtask').forEach(r => r.classList.remove('drag-over')); });
   });
 }
 
@@ -977,3 +1038,5 @@ loadData();
 loadPriorities();
 renderFeed();
 </script>
+</body>
+</html>
