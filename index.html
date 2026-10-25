@@ -4,7 +4,6 @@
 
 <style>
 /* === TOKENS === */
-/* Layout: fixed bottom-nav app shell, two-column masonry feed, week-grid calendar */
 :root {
   --bg: #f7f5f1;
   --surface: #ffffff;
@@ -24,451 +23,168 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #161512;
-    --surface: #211f1c;
-    --surface2: #2a2825;
-    --fg: #f0ede7;
-    --fg2: #a09890;
-    --accent: #5aad84;
-    --accent2: #f09060;
-    --border: #3a3733;
-    --shadow: 0 2px 12px rgba(0,0,0,0.3);
-    color-scheme: dark;
+    --bg: #161512; --surface: #211f1c; --surface2: #2a2825;
+    --fg: #f0ede7; --fg2: #a09890; --accent: #5aad84; --accent2: #f09060;
+    --border: #3a3733; --shadow: 0 2px 12px rgba(0,0,0,0.3); color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #161512;
-  --surface: #211f1c;
-  --surface2: #2a2825;
-  --fg: #f0ede7;
-  --fg2: #a09890;
-  --accent: #5aad84;
-  --accent2: #f09060;
-  --border: #3a3733;
-  --shadow: 0 2px 12px rgba(0,0,0,0.3);
-  color-scheme: dark;
+  --bg: #161512; --surface: #211f1c; --surface2: #2a2825;
+  --fg: #f0ede7; --fg2: #a09890; --accent: #5aad84; --accent2: #f09060;
+  --border: #3a3733; --shadow: 0 2px 12px rgba(0,0,0,0.3); color-scheme: dark;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: var(--font-body); background: var(--bg); color: var(--fg); font-size: 15px; overscroll-behavior: none; }
 
-html, body {
-  height: 100%;
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--fg);
-  font-size: 15px;
-  overscroll-behavior: none;
-}
-
-/* APP SHELL */
-#app {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-width: 520px;
-  margin: 0 auto;
-  position: relative;
-}
+#app { display: flex; flex-direction: column; height: 100%; max-width: 520px; margin: 0 auto; position: relative; }
 
 /* HEADER */
 .header {
-  position: sticky;
-  top: env(safe-area-inset-top, 0px);
-  z-index: 20;
-  background: var(--bg);
-  padding-block: 14px;
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--bg); padding-block: 14px;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
   border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
 }
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0 0 auto;
-  height: env(safe-area-inset-top, 0px);
-  z-index: 30;
-  background: var(--bg);
-}
-.header h1 {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--fg);
-  line-height: 1;
-}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.header h1 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; line-height: 1; }
 .header h1 span { color: var(--accent); }
 .header-actions { display: flex; gap: 8px; align-items: center; }
-.btn-add {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity .15s;
-}
+.btn-add { background: var(--accent); color: #fff; border: none; border-radius: 50%; width: 34px; height: 34px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity .15s; }
 .btn-add:hover { opacity: .85; }
 
 /* TABS */
-.tab-bar {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 520px;
-  z-index: 20;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  display: flex;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.tab-btn {
-  flex: 1;
-  background: none;
-  border: none;
-  padding: 10px 4px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  color: var(--fg2);
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: .02em;
-  transition: color .15s;
-}
+.tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 520px; z-index: 20; background: var(--surface); border-top: 1px solid var(--border); display: flex; padding-bottom: env(safe-area-inset-bottom, 0px); }
+.tab-btn { flex: 1; background: none; border: none; padding: 10px 4px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--fg2); font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; letter-spacing: .02em; transition: color .15s; }
 .tab-btn.active { color: var(--accent); }
 .tab-icon { font-size: 1.3rem; line-height: 1; }
-
-/* PAGES */
 .page { display: none; flex: 1; overflow-y: auto; }
 .page.active { display: block; }
 
 /* FEED */
-#page-feed {
-  padding: 12px max(16px, env(safe-area-inset-left, 0px));
-  padding-bottom: calc(var(--nav-h) + 24px);
-}
-.feed-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+#page-feed { padding: 12px max(16px, env(safe-area-inset-left, 0px)); padding-bottom: calc(var(--nav-h) + 24px); }
+.feed-grid { display: flex; flex-direction: column; gap: 10px; }
 
 /* CARDS */
-.card {
-  break-inside: avoid;
-  background: var(--surface);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  margin-bottom: 10px;
-  transition: transform .15s;
-  cursor: pointer;
-}
-.card:hover { transform: translateY(-2px); }
-.card-art {
-  width: 100%;
-  aspect-ratio: 4/3;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.card { background: var(--surface); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-bottom: 0; }
+.card-art { width: 100%; aspect-ratio: 4/3; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.card.wide .card-art { aspect-ratio: 16/7; }
 .card-art canvas { width: 100%; height: 100%; display: block; }
 
-.card-body {
-  padding: 11px 12px 13px;
+/* PHOTO EDIT BUTTON */
+.card-art-edit {
+  position: absolute; bottom: 8px; right: 8px; z-index: 5;
+  background: rgba(0,0,0,0.45); color: #fff; border: none;
+  border-radius: 8px; padding: 5px 9px; font-size: 0.72rem; font-weight: 600;
+  cursor: pointer; backdrop-filter: blur(4px); letter-spacing: .03em;
+  transition: background .15s;
 }
-.card-tag {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--accent2);
-  margin-bottom: 4px;
-}
-.card-title {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.25;
-  margin-bottom: 8px;
-  text-wrap: balance;
-}
-.subtasks { display: flex; flex-direction: column; gap: 5px; }
+.card-art-edit:hover { background: rgba(0,0,0,0.65); }
+
+.card-body { padding: 11px 12px 13px; }
+.card-tag { display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent2); margin-bottom: 4px; }
+.card-title { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; line-height: 1.25; margin-bottom: 8px; text-wrap: balance; }
+
+/* SUBTASKS */
+.subtasks { display: flex; flex-direction: column; gap: 4px; }
 .subtask {
-  display: flex;
-  align-items: flex-start;
-  gap: 7px;
-  font-size: 0.75rem;
-  color: var(--fg2);
-  line-height: 1.3;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; color: var(--fg2); line-height: 1.3;
+  padding: 3px 0; border-radius: 6px;
+  transition: background .1s;
 }
-.subtask input[type="checkbox"] {
-  margin-top: 1px;
-  flex-shrink: 0;
-  width: 14px;
-  height: 14px;
-  accent-color: var(--check);
-  cursor: pointer;
-}
-.subtask.done span { text-decoration: line-through; opacity: .5; }
-.card-footer {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.progress-bar {
-  height: 3px;
-  flex: 1;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-right: 8px;
-}
-.progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 2px;
-  transition: width .4s ease;
-}
-.progress-label {
-  font-size: 0.65rem;
-  color: var(--fg2);
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
+.subtask.drag-over { background: var(--surface2); }
+.drag-handle { cursor: grab; color: var(--border); font-size: 0.8rem; flex-shrink: 0; padding: 0 2px; user-select: none; }
+.drag-handle:active { cursor: grabbing; }
+.subtask input[type="checkbox"] { margin: 0; flex-shrink: 0; width: 14px; height: 14px; accent-color: var(--check); cursor: pointer; }
+.subtask.done .subtask-text { text-decoration: line-through; opacity: .5; }
+.subtask-text { flex: 1; }
 
-.card.wide .card-art { aspect-ratio: 16/7; }
-
-/* ADD MODAL */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 100;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+/* ADD TASK ROW */
+.add-task-row {
+  display: flex; align-items: center; gap: 6px; margin-top: 6px;
 }
+.add-task-input {
+  flex: 1; background: var(--surface2); border: 1.5px solid var(--border);
+  border-radius: 8px; padding: 5px 9px; font-family: var(--font-body);
+  font-size: 0.75rem; color: var(--fg); outline: none;
+}
+.add-task-input:focus { border-color: var(--accent); }
+.add-task-btn {
+  background: var(--accent); color: #fff; border: none; border-radius: 8px;
+  width: 26px; height: 26px; font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.add-task-trigger {
+  display: flex; align-items: center; gap: 5px; margin-top: 6px;
+  font-size: 0.72rem; color: var(--fg2); cursor: pointer; opacity: .7;
+  transition: opacity .15s;
+}
+.add-task-trigger:hover { opacity: 1; }
+
+.card-footer { margin-top: 10px; display: flex; align-items: center; justify-content: space-between; }
+.progress-bar { height: 3px; flex: 1; background: var(--border); border-radius: 2px; overflow: hidden; margin-right: 8px; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .4s ease; }
+.progress-label { font-size: 0.65rem; color: var(--fg2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* MODALS */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100; display: flex; align-items: flex-end; justify-content: center; }
 .modal-overlay[hidden] { display: none !important; }
-.modal {
-  background: var(--surface);
-  width: 100%;
-  max-width: 520px;
-  border-radius: 22px 22px 0 0;
-  padding: 24px max(20px, env(safe-area-inset-left, 0px));
-  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-}
-.modal h2 {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  margin-bottom: 16px;
-}
-.modal label {
-  display: block;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: .04em;
-  color: var(--fg2);
-  margin-bottom: 5px;
-}
-.modal input, .modal select, .modal textarea {
-  width: 100%;
-  background: var(--surface2);
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  padding: 9px 12px;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  color: var(--fg);
-  outline: none;
-  transition: border-color .15s;
-  margin-bottom: 14px;
-}
-.modal input:focus, .modal select:focus, .modal textarea:focus {
-  border-color: var(--accent);
-}
+.modal { background: var(--surface); width: 100%; max-width: 520px; border-radius: 22px 22px 0 0; padding: 24px max(20px, env(safe-area-inset-left, 0px)); padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+.modal h2 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 16px; }
+.modal label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: .04em; color: var(--fg2); margin-bottom: 5px; }
+.modal input, .modal select, .modal textarea { width: 100%; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; padding: 9px 12px; font-family: var(--font-body); font-size: 0.88rem; color: var(--fg); outline: none; transition: border-color .15s; margin-bottom: 14px; }
+.modal input:focus, .modal select:focus, .modal textarea:focus { border-color: var(--accent); }
 .modal textarea { resize: none; height: 80px; }
 .modal-actions { display: flex; gap: 10px; }
-.btn-cancel {
-  flex: 1;
-  background: var(--surface2);
-  border: none;
-  border-radius: 12px;
-  padding: 12px;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--fg2);
-  cursor: pointer;
+.btn-cancel { flex: 1; background: var(--surface2); border: none; border-radius: 12px; padding: 12px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; color: var(--fg2); cursor: pointer; }
+.btn-save { flex: 2; background: var(--accent); border: none; border-radius: 12px; padding: 12px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; color: #fff; cursor: pointer; }
+
+/* SCENE PICKER */
+#scene-picker-modal .modal { max-height: 70vh; overflow-y: auto; }
+.scene-picker-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+.scene-thumb {
+  border-radius: 10px; overflow: hidden; cursor: pointer;
+  border: 2px solid transparent; transition: border-color .15s;
+  aspect-ratio: 4/3; position: relative;
 }
-.btn-save {
-  flex: 2;
-  background: var(--accent);
-  border: none;
-  border-radius: 12px;
-  padding: 12px;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
+.scene-thumb.selected { border-color: var(--accent); }
+.scene-thumb canvas { width: 100%; height: 100%; display: block; }
+.scene-thumb-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.5); color: #fff; font-size: 0.58rem;
+  font-weight: 700; letter-spacing: .04em; text-align: center; padding: 3px;
 }
 
 /* PRIORITIES BLOCK */
-.priorities-block {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-  border-left: 3px solid var(--accent);
-}
-.priorities-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-.priorities-eyebrow {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.priorities-edit-btn {
-  background: none;
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
-  padding: 3px 10px;
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--fg2);
-  cursor: pointer;
-  transition: all .15s;
-}
+.priorities-block { background: var(--surface); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow); border-left: 3px solid var(--accent); }
+.priorities-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.priorities-eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.priorities-edit-btn { background: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 3px 10px; font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--fg2); cursor: pointer; transition: all .15s; }
 .priorities-edit-btn:hover { border-color: var(--accent); color: var(--accent); }
 .priorities-edit-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-.priority-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-}
+.priority-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
 .priority-row:last-child { border-bottom: none; padding-bottom: 0; }
 .priority-row:first-child { padding-top: 0; }
-.priority-num {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--accent);
-  width: 20px;
-  flex-shrink: 0;
-  line-height: 1;
-}
-.priority-text {
-  flex: 1;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--fg);
-  line-height: 1.3;
-}
+.priority-num { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--accent); width: 20px; flex-shrink: 0; line-height: 1; }
+.priority-text { flex: 1; font-size: 0.88rem; font-weight: 500; color: var(--fg); line-height: 1.3; }
 .priority-text.empty { color: var(--fg2); font-style: italic; font-weight: 400; }
-.priority-check {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  background: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all .15s;
-  font-size: 0.75rem;
-  color: #fff;
-}
-.priority-check.done { background: var(--accent); border-color: var(--accent); }
-.priority-input {
-  flex: 1;
-  background: var(--surface2);
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  color: var(--fg);
-  outline: none;
-}
-.priority-input:focus { border-color: var(--accent); }
 .priority-text.done-text { text-decoration: line-through; opacity: .45; }
+.priority-check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s; font-size: 0.75rem; color: #fff; }
+.priority-check.done { background: var(--accent); border-color: var(--accent); }
+.priority-input { flex: 1; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 8px; padding: 6px 10px; font-family: var(--font-body); font-size: 0.85rem; color: var(--fg); outline: none; }
+.priority-input:focus { border-color: var(--accent); }
 
 /* CALENDAR PAGE */
-#page-calendar {
-  padding: 16px max(16px, env(safe-area-inset-left, 0px));
-  padding-bottom: calc(var(--nav-h) + 24px);
-}
-.week-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-.week-nav h2 {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-.week-nav button {
-  background: var(--surface2);
-  border: none;
-  border-radius: 8px;
-  width: 34px;
-  height: 34px;
-  font-size: 1rem;
-  cursor: pointer;
-  color: var(--fg);
-  transition: background .15s;
-}
+#page-calendar { padding: 16px max(16px, env(safe-area-inset-left, 0px)); padding-bottom: calc(var(--nav-h) + 24px); }
+.week-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.week-nav h2 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; }
+.week-nav button { background: var(--surface2); border: none; border-radius: 8px; width: 34px; height: 34px; font-size: 1rem; cursor: pointer; color: var(--fg); transition: background .15s; }
 .week-nav button:hover { background: var(--border); }
-
-.days-row {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-  margin-bottom: 16px;
-}
-.day-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 6px 2px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background .15s;
-}
+.days-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 16px; }
+.day-chip { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px; border-radius: 12px; cursor: pointer; transition: background .15s; }
 .day-chip:hover { background: var(--surface2); }
 .day-chip.today { background: var(--accent); color: #fff; }
 .day-chip.selected:not(.today) { background: var(--surface2); outline: 2px solid var(--accent); }
@@ -476,120 +192,97 @@ body::before {
 .day-num { font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 .dot-row { display: flex; gap: 2px; min-height: 5px; }
 .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent2); }
-
-.day-tasks-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--fg2);
-  margin-bottom: 10px;
-}
-.day-task-list { display: flex; flex-direction: column; gap: 8px; }
-.day-task-card {
-  background: var(--surface);
-  border-radius: 14px;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: var(--shadow);
-}
+.day-tasks-label { font-size: 0.72rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--fg2); margin-bottom: 10px; }
+.day-task-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.day-task-card { background: var(--surface); border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); }
 .day-task-emoji { font-size: 1.4rem; line-height: 1; }
 .day-task-info { flex: 1; min-width: 0; }
-.day-task-title {
-  font-weight: 600;
-  font-size: 0.85rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.day-task-sub {
-  font-size: 0.72rem;
-  color: var(--fg2);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.day-task-done {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  background: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all .15s;
-  font-size: 0.7rem;
-  color: #fff;
-}
+.day-task-title { font-weight: 600; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.day-task-sub { font-size: 0.72rem; color: var(--fg2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.day-task-done { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s; font-size: 0.7rem; color: #fff; }
 .day-task-done.done { background: var(--check); border-color: var(--check); }
 
-.week-summary {
+.week-summary { background: var(--surface); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+.week-summary h3 { font-family: var(--font-display); font-size: 0.95rem; margin-bottom: 12px; }
+.stats-row { display: flex; gap: 10px; }
+.stat-box { flex: 1; background: var(--surface2); border-radius: 12px; padding: 12px 10px; text-align: center; }
+.stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
+.stat-label { font-size: 0.68rem; color: var(--fg2); margin-top: 3px; }
+.streak-row { display: flex; gap: 4px; margin-top: 14px; }
+.streak-day { flex: 1; height: 32px; border-radius: 6px; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 600; color: var(--fg2); position: relative; overflow: hidden; }
+.streak-day .fill { position: absolute; bottom: 0; left: 0; right: 0; background: var(--accent); opacity: .7; transition: height .4s ease; }
+.streak-day .lbl { position: relative; z-index: 1; }
+
+/* WEEKLY REVIEW */
+.weekly-review {
   margin-top: 20px;
   background: var(--surface);
   border-radius: var(--radius);
-  padding: 16px;
   box-shadow: var(--shadow);
-}
-.week-summary h3 {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  margin-bottom: 12px;
-}
-.stats-row { display: flex; gap: 10px; }
-.stat-box {
-  flex: 1;
-  background: var(--surface2);
-  border-radius: 12px;
-  padding: 12px 10px;
-  text-align: center;
-}
-.stat-num {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--accent);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.stat-label { font-size: 0.68rem; color: var(--fg2); margin-top: 3px; }
-
-/* STREAK BAR */
-.streak-row {
-  display: flex;
-  gap: 4px;
-  margin-top: 14px;
-}
-.streak-day {
-  flex: 1;
-  height: 32px;
-  border-radius: 6px;
-  background: var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.6rem;
-  font-weight: 600;
-  color: var(--fg2);
-  position: relative;
   overflow: hidden;
 }
-.streak-day .fill {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: var(--accent);
-  opacity: .7;
-  transition: height .4s ease;
+.wr-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 16px 0;
+  cursor: pointer;
 }
-.streak-day .lbl { position: relative; z-index: 1; }
+.wr-title-row { display: flex; align-items: center; gap: 10px; }
+.wr-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; }
+.wr-badge {
+  font-size: 0.65rem; font-weight: 700; background: var(--accent2);
+  color: #fff; border-radius: 20px; padding: 2px 8px; letter-spacing: .03em;
+}
+.wr-chevron { color: var(--fg2); font-size: 0.85rem; transition: transform .25s; }
+.wr-chevron.open { transform: rotate(180deg); }
+.wr-body { padding: 0 16px 16px; }
+.wr-desc {
+  font-size: 0.78rem; color: var(--fg2); line-height: 1.5;
+  margin: 10px 0 16px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.wr-progress { display: flex; gap: 3px; margin-bottom: 16px; }
+.wr-prog-seg { flex: 1; height: 4px; border-radius: 2px; background: var(--border); transition: background .3s; }
+.wr-prog-seg.done { background: var(--accent); }
+
+.wr-steps { display: flex; flex-direction: column; gap: 14px; }
+.wr-step { }
+.wr-step-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+  cursor: pointer;
+}
+.wr-step-num {
+  width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 700; color: var(--fg2); flex-shrink: 0;
+  transition: all .2s;
+}
+.wr-step-num.done { background: var(--accent); border-color: var(--accent); color: #fff; }
+.wr-step-name { font-size: 0.82rem; font-weight: 700; flex: 1; }
+.wr-step-sub { font-size: 0.72rem; color: var(--fg2); }
+.wr-step-body { padding-left: 36px; display: flex; flex-direction: column; gap: 6px; }
+.wr-check-row { display: flex; align-items: flex-start; gap: 8px; font-size: 0.78rem; color: var(--fg2); line-height: 1.4; cursor: pointer; }
+.wr-check-row input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; accent-color: var(--accent); width: 14px; height: 14px; }
+.wr-check-row.checked span { text-decoration: line-through; opacity: .5; }
+.wr-notes {
+  width: 100%; margin-top: 8px; background: var(--surface2);
+  border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 8px 10px; font-family: var(--font-body); font-size: 0.78rem;
+  color: var(--fg); outline: none; resize: none; height: 64px;
+  transition: border-color .15s;
+}
+.wr-notes:focus { border-color: var(--accent); }
+.wr-step-divider { height: 1px; background: var(--border); margin: 4px 0; }
+.wr-complete-btn {
+  width: 100%; background: var(--accent); color: #fff; border: none;
+  border-radius: 12px; padding: 12px; font-family: var(--font-body);
+  font-size: 0.88rem; font-weight: 600; cursor: pointer; margin-top: 16px;
+  transition: opacity .15s;
+}
+.wr-complete-btn:hover { opacity: .85; }
+.wr-complete-btn.completed { background: var(--surface2); color: var(--fg2); }
 </style>
 
 <div id="app">
-  <!-- HEADER -->
   <header class="header">
     <h1>make <span>them</span></h1>
     <div class="header-actions">
@@ -597,20 +290,17 @@ body::before {
     </div>
   </header>
 
-  <!-- FEED PAGE -->
   <div id="page-feed" class="page active">
     <div class="feed-grid" id="feed-grid"></div>
   </div>
 
-  <!-- CALENDAR PAGE -->
   <div id="page-calendar" class="page">
-    <!-- 3 PRIORITIES BLOCK -->
     <div class="priorities-block">
       <div class="priorities-header">
         <span class="priorities-eyebrow">today's focus</span>
         <button class="priorities-edit-btn" onclick="togglePrioritiesEdit()" id="pri-edit-btn">Edit</button>
       </div>
-      <div class="priorities-list" id="priorities-list"></div>
+      <div id="priorities-list"></div>
     </div>
 
     <div class="week-nav">
@@ -621,6 +311,7 @@ body::before {
     <div class="days-row" id="days-row"></div>
     <div class="day-tasks-label" id="day-tasks-label"></div>
     <div class="day-task-list" id="day-task-list"></div>
+
     <div class="week-summary">
       <h3>This week at a glance</h3>
       <div class="stats-row">
@@ -630,22 +321,35 @@ body::before {
       </div>
       <div class="streak-row" id="streak-row"></div>
     </div>
+
+    <div class="weekly-review" id="weekly-review">
+      <div class="wr-header" onclick="toggleWR()">
+        <div class="wr-title-row">
+          <span class="wr-title">Weekly Review</span>
+          <span class="wr-badge" id="wr-badge">0/5</span>
+        </div>
+        <span class="wr-chevron" id="wr-chevron">▾</span>
+      </div>
+      <div class="wr-body" id="wr-body" hidden>
+        <p class="wr-desc">A 15-minute ritual to close the week, clear your head, and set yourself up for the next one. Work through each step.</p>
+        <div class="wr-progress" id="wr-progress"></div>
+        <div class="wr-steps" id="wr-steps"></div>
+        <button class="wr-complete-btn" id="wr-complete-btn" onclick="markWRComplete()">Mark week as reviewed ✓</button>
+      </div>
+    </div>
   </div>
 
-  <!-- BOTTOM NAV -->
   <nav class="tab-bar">
     <button class="tab-btn active" onclick="switchTab('feed', this)">
-      <span class="tab-icon">🌿</span>
-      <span>Feed</span>
+      <span class="tab-icon">🌿</span><span>Feed</span>
     </button>
     <button class="tab-btn" onclick="switchTab('calendar', this)">
-      <span class="tab-icon">📅</span>
-      <span>Calendar</span>
+      <span class="tab-icon">📅</span><span>Calendar</span>
     </button>
   </nav>
 </div>
 
-<!-- ADD MODAL -->
+<!-- ADD PROJECT MODAL -->
 <div class="modal-overlay" id="modal" hidden>
   <div class="modal">
     <h2>New Project</h2>
@@ -660,7 +364,7 @@ body::before {
       <option value="health">🌱 Health</option>
       <option value="creative">🎨 Creative</option>
     </select>
-    <label>Subtasks (one per line)</label>
+    <label>Tasks (one per line)</label>
     <textarea id="new-subtasks" placeholder="Pay invoice&#10;Call contractor&#10;Review plans"></textarea>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
@@ -669,627 +373,110 @@ body::before {
   </div>
 </div>
 
+<!-- SCENE PICKER MODAL -->
+<div class="modal-overlay" id="scene-picker-modal" hidden>
+  <div class="modal" id="scene-picker-modal-inner">
+    <h2>Choose a photo</h2>
+    <div class="scene-picker-grid" id="scene-picker-grid"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeScenePicker()">Cancel</button>
+      <button class="btn-save" onclick="confirmScenePicker()">Choose</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ── DATA ─────────────────────────────────────────────────────────────────────
 
-const SCENE_LABELS = ['Forest','Ocean','Mountain','Meadow','Wetland','Desert','Arctic','Waterfall'];
-
-const TAGS = {
-  finance: '💰 Finance', home: '🏠 Home', family: '👨‍👩‍👧 Family',
-  work: '💼 Work', health: '🌱 Health', creative: '🎨 Creative'
-};
+const TAGS = { finance:'💰 Finance', home:'🏠 Home', family:'👨‍👩‍👧 Family', work:'💼 Work', health:'🌱 Health', creative:'🎨 Creative' };
+const SCENE_NAMES = ['Forest','Ocean','Mountain','Meadow','Wetland','Desert','Arctic','Waterfall'];
+const SCENES = ['forest','ocean','mountain','meadow','wetland','desert','arctic','waterfall'];
+const CAL_ICONS = ['🌲','🌊','🏔','🌸','🌿','🏜','❄️','💧'];
 
 let projects = [];
-let calDayDone = {};  // "yyyy-mm-dd-pid-sid" -> bool
+let calDayDone = {};
 let selectedDay = null;
 let weekOffset = 0;
 
 function loadData() {
   try {
-    const p = localStorage.getItem('pf_projects');
-    if (p) projects = JSON.parse(p);
-    const d = localStorage.getItem('pf_done');
-    if (d) calDayDone = JSON.parse(d);
+    const p = localStorage.getItem('pf_projects'); if (p) projects = JSON.parse(p);
+    const d = localStorage.getItem('pf_done'); if (d) calDayDone = JSON.parse(d);
   } catch(e) {}
   if (!projects.length) seedData();
 }
-
 function saveData() {
   try {
     localStorage.setItem('pf_projects', JSON.stringify(projects));
     localStorage.setItem('pf_done', JSON.stringify(calDayDone));
   } catch(e) {}
 }
-
 function seedData() {
   projects = [
-    {
-      id: 1, title: 'Xavierville Rental Unit', cat: 'finance', wide: false,
-      subtasks: [
-        { id: 1, text: 'Pay November rent', done: true },
-        { id: 2, text: 'Fix leaky faucet', done: false },
-        { id: 3, text: 'Review lease renewal', done: false },
-      ]
-    },
-    {
-      id: 2, title: 'Renovation', cat: 'home', wide: false,
-      subtasks: [
-        { id: 1, text: 'Pay contractor deposit', done: false },
-        { id: 2, text: 'Pick tile samples', done: true },
-        { id: 3, text: 'Approve floor plan', done: false },
-      ]
-    },
-    {
-      id: 3, title: 'Family Business Class', cat: 'family', wide: true,
-      subtasks: [
-        { id: 1, text: 'Talk to mom about curriculum', done: false },
-        { id: 2, text: 'Book meeting room', done: true },
-        { id: 3, text: 'Prepare agenda', done: false },
-        { id: 4, text: 'Send invites', done: false },
-      ]
-    },
-    {
-      id: 4, title: 'Health & Fitness', cat: 'health', wide: false,
-      subtasks: [
-        { id: 1, text: 'Sign up for yoga class', done: true },
-        { id: 2, text: 'Buy new running shoes', done: false },
-      ]
-    },
-    {
-      id: 5, title: 'Creative Side Project', cat: 'creative', wide: false,
-      subtasks: [
-        { id: 1, text: 'Sketch logo concepts', done: false },
-        { id: 2, text: 'Write brand brief', done: false },
-        { id: 3, text: 'Set up Figma board', done: true },
-      ]
-    },
-    {
-      id: 6, title: 'Work Emails & Admin', cat: 'work', wide: false,
-      subtasks: [
-        { id: 1, text: 'Reply to client proposal', done: true },
-        { id: 2, text: 'Update project tracker', done: true },
-        { id: 3, text: 'Schedule Q4 review', done: false },
-      ]
-    },
+    { id:1, title:'Xavierville Rental Unit', cat:'finance', scene:0, wide:false,
+      subtasks:[{id:1,text:'Pay November rent',done:true},{id:2,text:'Fix leaky faucet',done:false},{id:3,text:'Review lease renewal',done:false}] },
+    { id:2, title:'Renovation', cat:'home', scene:3, wide:false,
+      subtasks:[{id:1,text:'Pay contractor deposit',done:false},{id:2,text:'Pick tile samples',done:true},{id:3,text:'Approve floor plan',done:false}] },
+    { id:3, title:'Family Business Class', cat:'family', scene:2, wide:true,
+      subtasks:[{id:1,text:'Talk to mom about curriculum',done:false},{id:2,text:'Book meeting room',done:true},{id:3,text:'Prepare agenda',done:false},{id:4,text:'Send invites',done:false}] },
+    { id:4, title:'Health & Fitness', cat:'health', scene:1, wide:false,
+      subtasks:[{id:1,text:'Sign up for yoga class',done:true},{id:2,text:'Buy new running shoes',done:false}] },
+    { id:5, title:'Creative Side Project', cat:'creative', scene:7, wide:false,
+      subtasks:[{id:1,text:'Sketch logo concepts',done:false},{id:2,text:'Write brand brief',done:false},{id:3,text:'Set up Figma board',done:true}] },
+    { id:6, title:'Work Emails & Admin', cat:'work', scene:5, wide:false,
+      subtasks:[{id:1,text:'Reply to client proposal',done:true},{id:2,text:'Update project tracker',done:true},{id:3,text:'Schedule Q4 review',done:false}] },
   ];
   saveData();
 }
 
 // ── CANVAS ART ──────────────────────────────────────────────────────────────
 
-// Seeded pseudo-random for reproducible scenes
 function seededRand(seed) {
   let s = seed;
-  return () => { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 0xffffffff; };
+  return () => { s = (s*1664525+1013904223)&0xffffffff; return (s>>>0)/0xffffffff; };
 }
-
-const SCENES = ['forest','ocean','mountain','meadow','wetland','desert','arctic','waterfall'];
 
 function drawCardArt(canvas, project) {
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
-  const scene = SCENES[project.id % SCENES.length];
-  const rng = seededRand(project.id * 7919 + 31337);
+  const sceneIdx = project.scene ?? (project.id % 8);
+  const scene = SCENES[sceneIdx];
+  const rng = seededRand(sceneIdx * 7919 + 31337);
   drawScene(ctx, W, H, scene, rng);
 }
 
 function drawScene(ctx, W, H, scene, rng) {
   ctx.clearRect(0, 0, W, H);
-  if (scene === 'forest') drawForest(ctx, W, H, rng);
-  else if (scene === 'ocean') drawOcean(ctx, W, H, rng);
-  else if (scene === 'mountain') drawMountain(ctx, W, H, rng);
-  else if (scene === 'meadow') drawMeadow(ctx, W, H, rng);
-  else if (scene === 'wetland') drawWetland(ctx, W, H, rng);
-  else if (scene === 'desert') drawDesert(ctx, W, H, rng);
-  else if (scene === 'arctic') drawArctic(ctx, W, H, rng);
-  else drawWaterfall(ctx, W, H, rng);
+  if (scene==='forest') drawForest(ctx,W,H,rng);
+  else if (scene==='ocean') drawOcean(ctx,W,H,rng);
+  else if (scene==='mountain') drawMountain(ctx,W,H,rng);
+  else if (scene==='meadow') drawMeadow(ctx,W,H,rng);
+  else if (scene==='wetland') drawWetland(ctx,W,H,rng);
+  else if (scene==='desert') drawDesert(ctx,W,H,rng);
+  else if (scene==='arctic') drawArctic(ctx,W,H,rng);
+  else drawWaterfall(ctx,W,H,rng);
 }
 
-function drawForest(ctx, W, H, rng) {
-  // Sky
-  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.55);
-  sky.addColorStop(0, '#1a2d1a');
-  sky.addColorStop(1, '#2d5c2a');
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, W, H);
-
-  // Sun rays
-  ctx.save();
-  ctx.globalAlpha = 0.07;
-  const sx = W * 0.5, sy = -H * 0.1;
-  for (let i = 0; i < 12; i++) {
-    const angle = (i / 12) * Math.PI * 0.6 - Math.PI * 0.3;
-    ctx.beginPath();
-    ctx.moveTo(sx, sy);
-    ctx.lineTo(sx + Math.cos(angle) * W * 2, sy + Math.sin(angle) * H * 2);
-    ctx.lineTo(sx + Math.cos(angle + 0.08) * W * 2, sy + Math.sin(angle + 0.08) * H * 2);
-    ctx.closePath();
-    ctx.fillStyle = '#ffe88a';
-    ctx.fill();
-  }
-  ctx.restore();
-
-  // Ground
-  const ground = ctx.createLinearGradient(0, H * 0.55, 0, H);
-  ground.addColorStop(0, '#1a3d10');
-  ground.addColorStop(1, '#0d2208');
-  ctx.fillStyle = ground;
-  ctx.fillRect(0, H * 0.55, W, H);
-
-  // Fog layer
-  const fog = ctx.createLinearGradient(0, H * 0.45, 0, H * 0.7);
-  fog.addColorStop(0, 'rgba(200,230,200,0)');
-  fog.addColorStop(0.5, 'rgba(200,230,200,0.18)');
-  fog.addColorStop(1, 'rgba(200,230,200,0)');
-  ctx.fillStyle = fog;
-  ctx.fillRect(0, H * 0.45, W, H * 0.25);
-
-  // Trees background
-  for (let i = 0; i < 18; i++) {
-    const x = W * (i / 17);
-    const th = H * (0.45 + rng() * 0.25);
-    const tw = W * (0.03 + rng() * 0.02);
-    drawTree(ctx, x, H * 0.55, th, tw, `rgba(10,30,10,${0.5 + rng()*0.3})`, rng);
-  }
-  // Trees foreground
-  for (let i = 0; i < 8; i++) {
-    const x = W * (i / 7 + (rng()-0.5)*0.08);
-    const th = H * (0.55 + rng() * 0.2);
-    const tw = W * (0.04 + rng() * 0.03);
-    drawTree(ctx, x, H * 0.58, th, tw, `rgba(5,20,5,${0.8 + rng()*0.2})`, rng);
-  }
-
-  // Dappled light on ground
-  ctx.save();
-  ctx.globalAlpha = 0.12;
-  for (let i = 0; i < 8; i++) {
-    const lx = W * rng(), ly = H * (0.6 + rng() * 0.35);
-    const lg = ctx.createRadialGradient(lx, ly, 0, lx, ly, W * 0.1);
-    lg.addColorStop(0, '#c8ff80');
-    lg.addColorStop(1, 'transparent');
-    ctx.fillStyle = lg;
-    ctx.fillRect(0, 0, W, H);
-  }
-  ctx.restore();
-}
-
-function drawTree(ctx, x, baseY, height, width, color, rng) {
-  ctx.fillStyle = color;
-  // trunk
-  ctx.fillRect(x - width * 0.08, baseY - height * 0.15, width * 0.16, height * 0.15);
-  // canopy layers
-  for (let layer = 0; layer < 3; layer++) {
-    const ly = baseY - height * (0.25 + layer * 0.28);
-    const lw = width * (1 - layer * 0.2);
-    ctx.beginPath();
-    ctx.moveTo(x, ly - height * 0.28);
-    ctx.lineTo(x - lw * 0.5, ly);
-    ctx.lineTo(x + lw * 0.5, ly);
-    ctx.closePath();
-    ctx.fill();
-  }
-}
-
-function drawOcean(ctx, W, H, rng) {
-  // Sky gradient - golden hour
-  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.5);
-  sky.addColorStop(0, '#1a2c5c');
-  sky.addColorStop(0.5, '#e87040');
-  sky.addColorStop(1, '#ffb347');
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, W, H);
-
-  // Sun
-  const sunG = ctx.createRadialGradient(W*0.5, H*0.22, 0, W*0.5, H*0.22, W*0.12);
-  sunG.addColorStop(0, '#fff7a0');
-  sunG.addColorStop(0.3, '#ffcc44');
-  sunG.addColorStop(1, 'transparent');
-  ctx.fillStyle = sunG;
-  ctx.fillRect(0, 0, W, H);
-
-  // Horizon glow
-  const hg = ctx.createLinearGradient(0, H*0.42, 0, H*0.58);
-  hg.addColorStop(0, 'rgba(255,200,80,0.5)');
-  hg.addColorStop(1, 'rgba(255,200,80,0)');
-  ctx.fillStyle = hg;
-  ctx.fillRect(0, H*0.42, W, H*0.16);
-
-  // Ocean
-  const ocean = ctx.createLinearGradient(0, H * 0.5, 0, H);
-  ocean.addColorStop(0, '#1a5080');
-  ocean.addColorStop(0.3, '#0d3a6b');
-  ocean.addColorStop(1, '#081f40');
-  ctx.fillStyle = ocean;
-  ctx.fillRect(0, H * 0.5, W, H);
-
-  // Sun reflection on water
-  ctx.save();
-  ctx.globalAlpha = 0.35;
-  const ref = ctx.createLinearGradient(W*0.35, H*0.5, W*0.65, H);
-  ref.addColorStop(0, '#ffdd88');
-  ref.addColorStop(1, 'rgba(255,200,80,0)');
-  ctx.fillStyle = ref;
-  ctx.beginPath();
-  ctx.moveTo(W*0.44, H*0.5);
-  ctx.lineTo(W*0.56, H*0.5);
-  ctx.lineTo(W*0.75, H);
-  ctx.lineTo(W*0.25, H);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-
-  // Waves
-  for (let row = 0; row < 7; row++) {
-    const wy = H * (0.52 + row * 0.07);
-    const wAlpha = 0.08 + row * 0.04;
-    ctx.save();
-    ctx.globalAlpha = wAlpha;
-    ctx.strokeStyle = '#88ccff';
-    ctx.lineWidth = 1 + row * 0.3;
-    ctx.beginPath();
-    for (let wx = 0; wx <= W; wx += 3) {
-      const yw = wy + Math.sin(wx * 0.04 + row * 1.3) * (2 + row);
-      wx === 0 ? ctx.moveTo(wx, yw) : ctx.lineTo(wx, yw);
-    }
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  // Clouds
-  ctx.save();
-  ctx.globalAlpha = 0.3;
-  for (let c = 0; c < 4; c++) {
-    const cx = W * (0.1 + c * 0.25 + rng()*0.05);
-    const cy = H * (0.08 + rng() * 0.12);
-    drawCloud(ctx, cx, cy, W * (0.06 + rng()*0.05));
-  }
-  ctx.restore();
-}
-
-function drawCloud(ctx, x, y, r) {
-  ctx.fillStyle = 'rgba(255,240,220,0.9)';
-  [[-r*0.5,r*0.2,r*0.55],[0,0,r],[r*0.5,r*0.2,r*0.55],[-r*0.8,r*0.4,r*0.4],[r*0.8,r*0.4,r*0.4]].forEach(([dx,dy,cr]) => {
-    ctx.beginPath(); ctx.arc(x+dx, y+dy, cr, 0, Math.PI*2); ctx.fill();
-  });
-}
-
-function drawMountain(ctx, W, H, rng) {
-  // Dawn sky
-  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.6);
-  sky.addColorStop(0, '#0f1a2e');
-  sky.addColorStop(0.4, '#1a3060');
-  sky.addColorStop(0.7, '#c05020');
-  sky.addColorStop(1, '#e8803a');
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, W, H);
-
-  // Stars
-  ctx.save();
-  ctx.globalAlpha = 0.7;
-  for (let i = 0; i < 40; i++) {
-    const sx = W * rng(), sy = H * rng() * 0.4;
-    const sr = rng() * 1.2;
-    ctx.fillStyle = '#ffffff';
-    ctx.beginPath(); ctx.arc(sx, sy, sr, 0, Math.PI*2); ctx.fill();
-  }
-  ctx.restore();
-
-  // Far mountains
-  ctx.fillStyle = '#1a2a4a';
-  ctx.beginPath();
-  ctx.moveTo(0, H);
-  const peaks = [[0.05,0.55],[0.15,0.32],[0.28,0.48],[0.4,0.22],[0.55,0.4],[0.68,0.18],[0.8,0.38],[0.92,0.28],[1,0.45]];
-  peaks.forEach(([px,py]) => ctx.lineTo(W*px, H*py));
-  ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
-
-  // Mid mountains with snow caps
-  const midMtn = [[0,0.7],[0.12,0.42],[0.25,0.62],[0.38,0.35],[0.5,0.55],[0.62,0.3],[0.75,0.52],[0.88,0.38],[1,0.58],[1,1],[0,1]];
-  ctx.fillStyle = '#2a3d5c';
-  ctx.beginPath();
-  midMtn.forEach(([px,py],i) => i===0 ? ctx.moveTo(W*px,H*py) : ctx.lineTo(W*px,H*py));
-  ctx.closePath(); ctx.fill();
-
-  // Snow caps
-  [[0.12,0.42],[0.38,0.35],[0.62,0.3],[0.88,0.38]].forEach(([px,py]) => {
-    const mx = W*px, my = H*py;
-    ctx.fillStyle = 'rgba(220,235,255,0.85)';
-    ctx.beginPath();
-    ctx.moveTo(mx, my);
-    ctx.lineTo(mx - W*0.04, my + H*0.06);
-    ctx.lineTo(mx + W*0.04, my + H*0.06);
-    ctx.closePath(); ctx.fill();
-  });
-
-  // Foreground slope
-  const fg = ctx.createLinearGradient(0, H*0.72, 0, H);
-  fg.addColorStop(0, '#1a2d18');
-  fg.addColorStop(1, '#0d1a0a');
-  ctx.fillStyle = fg;
-  ctx.beginPath();
-  ctx.moveTo(0, H*0.72);
-  for (let x = 0; x <= W; x += 5) ctx.lineTo(x, H*(0.72 + 0.06*Math.sin(x*0.02)));
-  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
-
-  // Alpine glow
-  ctx.save(); ctx.globalAlpha = 0.15;
-  const ag = ctx.createLinearGradient(0, H*0.3, 0, H*0.55);
-  ag.addColorStop(0, '#ff7040'); ag.addColorStop(1, 'transparent');
-  ctx.fillStyle = ag; ctx.fillRect(0, H*0.3, W, H*0.25);
-  ctx.restore();
-}
-
-function drawMeadow(ctx, W, H, rng) {
-  // Bright sky
-  const sky = ctx.createLinearGradient(0, 0, 0, H*0.55);
-  sky.addColorStop(0, '#4a90d9');
-  sky.addColorStop(1, '#a8d4f0');
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, W, H);
-
-  // Clouds
-  ctx.save(); ctx.globalAlpha = 0.9;
-  for (let c = 0; c < 5; c++) drawCloud(ctx, W*(0.1+c*0.2+rng()*0.05), H*(0.1+rng()*0.2), W*(0.04+rng()*0.04));
-  ctx.restore();
-
-  // Grass gradient
-  const grass = ctx.createLinearGradient(0, H*0.55, 0, H);
-  grass.addColorStop(0, '#5da832');
-  grass.addColorStop(0.4, '#3d8020');
-  grass.addColorStop(1, '#1a4010');
-  ctx.fillStyle = grass;
-  ctx.fillRect(0, H*0.55, W, H);
-
-  // Rolling hills silhouette
-  ctx.fillStyle = '#4a9428';
-  ctx.beginPath(); ctx.moveTo(0, H*0.55);
-  for (let x = 0; x <= W; x += 4) ctx.lineTo(x, H*(0.55 - 0.04*Math.sin(x*0.015) - 0.02*Math.sin(x*0.031)));
-  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
-
-  // Wildflowers
-  const flowerColors = ['#ff4466','#ffcc00','#ff8844','#cc44ff','#ffffff','#44ccff'];
-  for (let i = 0; i < 80; i++) {
-    const fx = W * rng(), fy = H * (0.58 + rng() * 0.38);
-    const fc = flowerColors[Math.floor(rng() * flowerColors.length)];
-    ctx.fillStyle = fc;
-    ctx.beginPath(); ctx.arc(fx, fy, 1.5 + rng()*2.5, 0, Math.PI*2); ctx.fill();
-  }
-
-  // Grass blades
-  ctx.save(); ctx.globalAlpha = 0.5;
-  for (let i = 0; i < 60; i++) {
-    const bx = W * rng(), by = H * (0.6 + rng() * 0.35);
-    const bh = H * (0.03 + rng() * 0.05);
-    ctx.strokeStyle = '#2a6010';
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(bx, by); ctx.quadraticCurveTo(bx + (rng()-0.5)*10, by - bh*0.5, bx + (rng()-0.5)*8, by - bh); ctx.stroke();
-  }
-  ctx.restore();
-}
-
-function drawWetland(ctx, W, H, rng) {
-  // Sunset sky
-  const sky = ctx.createLinearGradient(0, 0, 0, H*0.5);
-  sky.addColorStop(0, '#2a1a40');
-  sky.addColorStop(0.5, '#8a3060');
-  sky.addColorStop(1, '#e87030');
-  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
-
-  // Water
-  const water = ctx.createLinearGradient(0, H*0.5, 0, H);
-  water.addColorStop(0, '#4a2860');
-  water.addColorStop(1, '#1a1030');
-  ctx.fillStyle = water; ctx.fillRect(0, H*0.5, W, H);
-
-  // Reflection
-  ctx.save(); ctx.globalAlpha = 0.3;
-  const ref = ctx.createLinearGradient(W*0.3,H*0.5,W*0.7,H);
-  ref.addColorStop(0,'#ff8844'); ref.addColorStop(1,'rgba(255,136,68,0)');
-  ctx.fillStyle = ref;
-  ctx.beginPath(); ctx.moveTo(W*0.4,H*0.5); ctx.lineTo(W*0.6,H*0.5); ctx.lineTo(W*0.8,H); ctx.lineTo(W*0.2,H); ctx.closePath(); ctx.fill();
-  ctx.restore();
-
-  // Reeds
-  for (let i = 0; i < 30; i++) {
-    const rx = W*(0.05 + rng()*0.9), ry = H*(0.55 + rng()*0.3);
-    const rh = H*(0.15 + rng()*0.2);
-    ctx.strokeStyle = `rgba(20,10,5,${0.7+rng()*0.3})`;
-    ctx.lineWidth = 1.5 + rng();
-    ctx.beginPath(); ctx.moveTo(rx, ry); ctx.lineTo(rx+(rng()-0.5)*8, ry-rh); ctx.stroke();
-    ctx.fillStyle = '#3a2010';
-    ctx.beginPath(); ctx.ellipse(rx+(rng()-0.5)*8, ry-rh, 2, 6, 0, 0, Math.PI*2); ctx.fill();
-  }
-
-  // Water ripples
-  ctx.save(); ctx.globalAlpha = 0.15;
-  for (let i = 0; i < 5; i++) {
-    const ex = W*(0.3+rng()*0.4), ey = H*(0.6+rng()*0.3);
-    ctx.strokeStyle = '#88aacc'; ctx.lineWidth = 0.8;
-    ctx.beginPath(); ctx.ellipse(ex, ey, W*0.06*(i*0.5+1), H*0.02*(i*0.5+1), 0, 0, Math.PI*2); ctx.stroke();
-  }
-  ctx.restore();
-}
-
-function drawDesert(ctx, W, H, rng) {
-  // Blazing sky
-  const sky = ctx.createLinearGradient(0, 0, 0, H*0.5);
-  sky.addColorStop(0, '#1a2860');
-  sky.addColorStop(0.6, '#e06020');
-  sky.addColorStop(1, '#f0a030');
-  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
-
-  // Sun
-  const sg = ctx.createRadialGradient(W*0.75, H*0.15, 0, W*0.75, H*0.15, W*0.15);
-  sg.addColorStop(0,'#fffaaa'); sg.addColorStop(0.3,'#ffcc44'); sg.addColorStop(1,'transparent');
-  ctx.fillStyle = sg; ctx.fillRect(0,0,W,H);
-
-  // Sand dunes
-  const dune1 = ctx.createLinearGradient(0, H*0.5, 0, H);
-  dune1.addColorStop(0, '#d4884a'); dune1.addColorStop(1, '#a05820');
-  ctx.fillStyle = dune1;
-  ctx.beginPath(); ctx.moveTo(0, H);
-  ctx.bezierCurveTo(W*0.2, H*0.48, W*0.4, H*0.52, W*0.55, H*0.44);
-  ctx.bezierCurveTo(W*0.7, H*0.36, W*0.85, H*0.5, W, H*0.42);
-  ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
-
-  ctx.fillStyle = '#c07840';
-  ctx.beginPath(); ctx.moveTo(0, H);
-  ctx.bezierCurveTo(W*0.15, H*0.62, W*0.3, H*0.58, W*0.5, H*0.65);
-  ctx.bezierCurveTo(W*0.7, H*0.72, W*0.85, H*0.62, W, H*0.68);
-  ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
-
-  // Dune shadow
-  ctx.save(); ctx.globalAlpha = 0.25;
-  ctx.fillStyle = '#602010';
-  ctx.beginPath(); ctx.moveTo(W*0.5, H*0.44); ctx.bezierCurveTo(W*0.6,H*0.5,W*0.75,H*0.48,W,H*0.42); ctx.lineTo(W,H*0.55); ctx.bezierCurveTo(W*0.75,H*0.55,W*0.6,H*0.55,W*0.5,H*0.5); ctx.closePath(); ctx.fill();
-  ctx.restore();
-
-  // Cacti
-  for (let i = 0; i < 4; i++) {
-    const cx = W*(0.1+i*0.22+rng()*0.05), cy = H*(0.42+rng()*0.1);
-    const ch = H*(0.12+rng()*0.1);
-    ctx.fillStyle = '#2d5a20'; ctx.strokeStyle = '#1a3810'; ctx.lineWidth = 1;
-    ctx.fillRect(cx-5, cy-ch, 10, ch); ctx.strokeRect(cx-5, cy-ch, 10, ch);
-    // arms
-    const armY = cy - ch*0.5;
-    ctx.fillRect(cx-15, armY-ch*0.2, 10, ch*0.25); ctx.strokeRect(cx-15, armY-ch*0.2, 10, ch*0.25);
-    ctx.fillRect(cx+5, armY-ch*0.15, 10, ch*0.2); ctx.strokeRect(cx+5, armY-ch*0.15, 10, ch*0.2);
-  }
-}
-
-function drawArctic(ctx, W, H, rng) {
-  // Aurora sky
-  const sky = ctx.createLinearGradient(0, 0, 0, H*0.6);
-  sky.addColorStop(0, '#030818');
-  sky.addColorStop(0.5, '#061830');
-  sky.addColorStop(1, '#0a2840');
-  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
-
-  // Stars
-  for (let i = 0; i < 60; i++) {
-    const sx = W*rng(), sy = H*rng()*0.6;
-    ctx.fillStyle = `rgba(255,255,255,${0.3+rng()*0.7})`;
-    ctx.beginPath(); ctx.arc(sx, sy, rng()*1.3, 0, Math.PI*2); ctx.fill();
-  }
-
-  // Aurora bands
-  ctx.save();
-  const auroraColors = [['rgba(0,255,128,0.15)','rgba(0,200,255,0.1)'],['rgba(128,0,255,0.1)','rgba(0,255,128,0.12)']];
-  auroraColors.forEach(([c1,c2], ai) => {
-    const ag = ctx.createLinearGradient(0, H*(0.1+ai*0.15), W, H*(0.35+ai*0.1));
-    ag.addColorStop(0, c1); ag.addColorStop(0.5, c2); ag.addColorStop(1, 'transparent');
-    ctx.fillStyle = ag;
-    ctx.beginPath();
-    ctx.moveTo(0, H*(0.1+ai*0.12));
-    for (let x = 0; x <= W; x += 8) ctx.lineTo(x, H*(0.1+ai*0.12) + Math.sin(x*0.02+ai)*H*0.06);
-    for (let x = W; x >= 0; x -= 8) ctx.lineTo(x, H*(0.2+ai*0.12) + Math.sin(x*0.02+ai+1)*H*0.04);
-    ctx.closePath(); ctx.fill();
-  });
-  ctx.restore();
-
-  // Snow ground
-  const snow = ctx.createLinearGradient(0, H*0.6, 0, H);
-  snow.addColorStop(0, '#c8ddf0'); snow.addColorStop(1, '#8aaac8');
-  ctx.fillStyle = snow; ctx.fillRect(0, H*0.6, W, H);
-
-  // Snow drifts
-  ctx.fillStyle = '#d8eaff';
-  ctx.beginPath(); ctx.moveTo(0, H*0.6);
-  for (let x = 0; x <= W; x += 5) ctx.lineTo(x, H*(0.6-0.03*Math.sin(x*0.025)-0.015*Math.sin(x*0.06)));
-  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
-
-  // Icy reflections
-  ctx.save(); ctx.globalAlpha = 0.2;
-  for (let i = 0; i < 6; i++) {
-    const ix = W*(0.1+i*0.15+rng()*0.05), iy = H*(0.65+rng()*0.25);
-    const ig = ctx.createRadialGradient(ix,iy,0,ix,iy,W*0.06);
-    ig.addColorStop(0,'#88ccff'); ig.addColorStop(1,'transparent');
-    ctx.fillStyle = ig; ctx.fillRect(0,0,W,H);
-  }
-  ctx.restore();
-}
-
-function drawWaterfall(ctx, W, H, rng) {
-  // Jungle backdrop
-  const bg = ctx.createLinearGradient(0,0,0,H);
-  bg.addColorStop(0,'#0a2010'); bg.addColorStop(1,'#051008');
-  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
-
-  // Background foliage
-  ctx.save(); ctx.globalAlpha = 0.6;
-  for (let i = 0; i < 20; i++) {
-    const lx = W*(i/19), ly = H*(0.05+rng()*0.3);
-    const ls = W*(0.06+rng()*0.05);
-    ctx.fillStyle = `hsl(${120+rng()*30},${50+rng()*30}%,${15+rng()*10}%)`;
-    ctx.beginPath(); ctx.ellipse(lx, ly, ls, ls*0.5, (rng()-0.5)*Math.PI, 0, Math.PI*2); ctx.fill();
-  }
-  ctx.restore();
-
-  // Rock cliff
-  ctx.fillStyle = '#2a2520';
-  ctx.beginPath();
-  ctx.moveTo(W*0.2, 0); ctx.lineTo(W*0.2, H*0.6); ctx.bezierCurveTo(W*0.25,H*0.65,W*0.3,H*0.62,W*0.35,H*0.58);
-  ctx.lineTo(W*0.35, 0); ctx.closePath(); ctx.fill();
-  ctx.fillStyle = '#3a3028';
-  ctx.beginPath();
-  ctx.moveTo(W*0.65, 0); ctx.lineTo(W*0.65, H*0.58); ctx.bezierCurveTo(W*0.7,H*0.62,W*0.75,H*0.65,W*0.8,H*0.6);
-  ctx.lineTo(W*0.8, 0); ctx.closePath(); ctx.fill();
-
-  // Waterfall spray mist
-  ctx.save(); ctx.globalAlpha = 0.2;
-  const mist = ctx.createRadialGradient(W*0.5,H*0.65,0,W*0.5,H*0.65,W*0.3);
-  mist.addColorStop(0,'#aaddff'); mist.addColorStop(1,'transparent');
-  ctx.fillStyle = mist; ctx.fillRect(0,0,W,H);
-  ctx.restore();
-
-  // Waterfall streams
-  for (let s = 0; s < 5; s++) {
-    const sx = W*(0.32+s*0.07+rng()*0.02);
-    const wg = ctx.createLinearGradient(sx,0,sx,H*0.65);
-    wg.addColorStop(0,'rgba(160,210,255,0.9)');
-    wg.addColorStop(0.7,'rgba(120,180,240,0.6)');
-    wg.addColorStop(1,'rgba(100,160,220,0)');
-    ctx.fillStyle = wg;
-    ctx.fillRect(sx-2,0,3+rng()*3,H*0.65);
-  }
-
-  // Pool
-  const pool = ctx.createLinearGradient(0,H*0.62,0,H);
-  pool.addColorStop(0,'#2a5580'); pool.addColorStop(1,'#102a50');
-  ctx.fillStyle = pool; ctx.fillRect(0,H*0.62,W,H);
-
-  // Pool ripples
-  ctx.save(); ctx.globalAlpha = 0.25;
-  for (let r = 0; r < 4; r++) {
-    ctx.strokeStyle = '#88ccff'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.ellipse(W*0.5, H*0.72, W*(0.12+r*0.08), H*(0.04+r*0.02), 0, 0, Math.PI*2); ctx.stroke();
-  }
-  ctx.restore();
-
-  // Lush ferns at base
-  ctx.save(); ctx.globalAlpha = 0.8;
-  for (let f = 0; f < 10; f++) {
-    const fx = W*(f/9+rng()*0.05-0.025), fy = H*(0.62+rng()*0.1);
-    ctx.strokeStyle = `hsl(${130+rng()*20},60%,${20+rng()*15}%)`;
-    ctx.lineWidth = 1.5;
-    for (let b = -3; b <= 3; b++) {
-      ctx.beginPath(); ctx.moveTo(fx,fy); ctx.quadraticCurveTo(fx+b*8,fy-H*0.05,fx+b*12,fy-H*0.08); ctx.stroke();
-    }
-  }
-  ctx.restore();
-}
+function drawForest(ctx,W,H,rng){const sky=ctx.createLinearGradient(0,0,0,H*.55);sky.addColorStop(0,'#1a2d1a');sky.addColorStop(1,'#2d5c2a');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.07;const sx=W*.5,sy=-H*.1;for(let i=0;i<12;i++){const a=(i/12)*Math.PI*.6-Math.PI*.3;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(sx+Math.cos(a)*W*2,sy+Math.sin(a)*H*2);ctx.lineTo(sx+Math.cos(a+.08)*W*2,sy+Math.sin(a+.08)*H*2);ctx.closePath();ctx.fillStyle='#ffe88a';ctx.fill();}ctx.restore();const ground=ctx.createLinearGradient(0,H*.55,0,H);ground.addColorStop(0,'#1a3d10');ground.addColorStop(1,'#0d2208');ctx.fillStyle=ground;ctx.fillRect(0,H*.55,W,H);const fog=ctx.createLinearGradient(0,H*.45,0,H*.7);fog.addColorStop(0,'rgba(200,230,200,0)');fog.addColorStop(.5,'rgba(200,230,200,.18)');fog.addColorStop(1,'rgba(200,230,200,0)');ctx.fillStyle=fog;ctx.fillRect(0,H*.45,W,H*.25);for(let i=0;i<18;i++){const x=W*(i/17),th=H*(.45+rng()*.25),tw=W*(.03+rng()*.02);drawTree(ctx,x,H*.55,th,tw,`rgba(10,30,10,${.5+rng()*.3})`,rng);}for(let i=0;i<8;i++){const x=W*(i/7+(rng()-.5)*.08),th=H*(.55+rng()*.2),tw=W*(.04+rng()*.03);drawTree(ctx,x,H*.58,th,tw,`rgba(5,20,5,${.8+rng()*.2})`,rng);}ctx.save();ctx.globalAlpha=.12;for(let i=0;i<8;i++){const lx=W*rng(),ly=H*(.6+rng()*.35),lg=ctx.createRadialGradient(lx,ly,0,lx,ly,W*.1);lg.addColorStop(0,'#c8ff80');lg.addColorStop(1,'transparent');ctx.fillStyle=lg;ctx.fillRect(0,0,W,H);}ctx.restore();}
+function drawTree(ctx,x,baseY,height,width,color,rng){ctx.fillStyle=color;ctx.fillRect(x-width*.08,baseY-height*.15,width*.16,height*.15);for(let l=0;l<3;l++){const ly=baseY-height*(.25+l*.28),lw=width*(1-l*.2);ctx.beginPath();ctx.moveTo(x,ly-height*.28);ctx.lineTo(x-lw*.5,ly);ctx.lineTo(x+lw*.5,ly);ctx.closePath();ctx.fill();}}
+function drawOcean(ctx,W,H,rng){const sky=ctx.createLinearGradient(0,0,0,H*.5);sky.addColorStop(0,'#1a2c5c');sky.addColorStop(.5,'#e87040');sky.addColorStop(1,'#ffb347');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);const sunG=ctx.createRadialGradient(W*.5,H*.22,0,W*.5,H*.22,W*.12);sunG.addColorStop(0,'#fff7a0');sunG.addColorStop(.3,'#ffcc44');sunG.addColorStop(1,'transparent');ctx.fillStyle=sunG;ctx.fillRect(0,0,W,H);const hg=ctx.createLinearGradient(0,H*.42,0,H*.58);hg.addColorStop(0,'rgba(255,200,80,.5)');hg.addColorStop(1,'rgba(255,200,80,0)');ctx.fillStyle=hg;ctx.fillRect(0,H*.42,W,H*.16);const ocean=ctx.createLinearGradient(0,H*.5,0,H);ocean.addColorStop(0,'#1a5080');ocean.addColorStop(.3,'#0d3a6b');ocean.addColorStop(1,'#081f40');ctx.fillStyle=ocean;ctx.fillRect(0,H*.5,W,H);ctx.save();ctx.globalAlpha=.35;const ref=ctx.createLinearGradient(W*.35,H*.5,W*.65,H);ref.addColorStop(0,'#ffdd88');ref.addColorStop(1,'rgba(255,200,80,0)');ctx.fillStyle=ref;ctx.beginPath();ctx.moveTo(W*.44,H*.5);ctx.lineTo(W*.56,H*.5);ctx.lineTo(W*.75,H);ctx.lineTo(W*.25,H);ctx.closePath();ctx.fill();ctx.restore();for(let row=0;row<7;row++){const wy=H*(.52+row*.07);ctx.save();ctx.globalAlpha=.08+row*.04;ctx.strokeStyle='#88ccff';ctx.lineWidth=1+row*.3;ctx.beginPath();for(let wx=0;wx<=W;wx+=3){const yw=wy+Math.sin(wx*.04+row*1.3)*(2+row);wx===0?ctx.moveTo(wx,yw):ctx.lineTo(wx,yw);}ctx.stroke();ctx.restore();}ctx.save();ctx.globalAlpha=.3;for(let c=0;c<4;c++)drawCloud(ctx,W*(.1+c*.25+rng()*.05),H*(.08+rng()*.12),W*(.06+rng()*.05));ctx.restore();}
+function drawCloud(ctx,x,y,r){ctx.fillStyle='rgba(255,240,220,.9)';[[-r*.5,r*.2,r*.55],[0,0,r],[r*.5,r*.2,r*.55],[-r*.8,r*.4,r*.4],[r*.8,r*.4,r*.4]].forEach(([dx,dy,cr])=>{ctx.beginPath();ctx.arc(x+dx,y+dy,cr,0,Math.PI*2);ctx.fill();});}
+function drawMountain(ctx,W,H,rng){const sky=ctx.createLinearGradient(0,0,0,H*.6);sky.addColorStop(0,'#0f1a2e');sky.addColorStop(.4,'#1a3060');sky.addColorStop(.7,'#c05020');sky.addColorStop(1,'#e8803a');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.7;for(let i=0;i<40;i++){const sx=W*rng(),sy=H*rng()*.4,sr=rng()*1.2;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fill();}ctx.restore();ctx.fillStyle='#1a2a4a';ctx.beginPath();ctx.moveTo(0,H);[[.05,.55],[.15,.32],[.28,.48],[.4,.22],[.55,.4],[.68,.18],[.8,.38],[.92,.28],[1,.45]].forEach(([px,py])=>ctx.lineTo(W*px,H*py));ctx.lineTo(W,H);ctx.closePath();ctx.fill();ctx.fillStyle='#2a3d5c';ctx.beginPath();[[0,.7],[.12,.42],[.25,.62],[.38,.35],[.5,.55],[.62,.3],[.75,.52],[.88,.38],[1,.58],[1,1],[0,1]].forEach(([px,py],i)=>i===0?ctx.moveTo(W*px,H*py):ctx.lineTo(W*px,H*py));ctx.closePath();ctx.fill();[[.12,.42],[.38,.35],[.62,.3],[.88,.38]].forEach(([px,py])=>{const mx=W*px,my=H*py;ctx.fillStyle='rgba(220,235,255,.85)';ctx.beginPath();ctx.moveTo(mx,my);ctx.lineTo(mx-W*.04,my+H*.06);ctx.lineTo(mx+W*.04,my+H*.06);ctx.closePath();ctx.fill();});const fg=ctx.createLinearGradient(0,H*.72,0,H);fg.addColorStop(0,'#1a2d18');fg.addColorStop(1,'#0d1a0a');ctx.fillStyle=fg;ctx.beginPath();ctx.moveTo(0,H*.72);for(let x=0;x<=W;x+=5)ctx.lineTo(x,H*(.72+.06*Math.sin(x*.02)));ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fill();}
+function drawMeadow(ctx,W,H,rng){const sky=ctx.createLinearGradient(0,0,0,H*.55);sky.addColorStop(0,'#4a90d9');sky.addColorStop(1,'#a8d4f0');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.9;for(let c=0;c<5;c++)drawCloud(ctx,W*(.1+c*.2+rng()*.05),H*(.1+rng()*.2),W*(.04+rng()*.04));ctx.restore();const grass=ctx.createLinearGradient(0,H*.55,0,H);grass.addColorStop(0,'#5da832');grass.addColorStop(.4,'#3d8020');grass.addColorStop(1,'#1a4010');ctx.fillStyle=grass;ctx.fillRect(0,H*.55,W,H);ctx.fillStyle='#4a9428';ctx.beginPath();ctx.moveTo(0,H*.55);for(let x=0;x<=W;x+=4)ctx.lineTo(x,H*(.55-.04*Math.sin(x*.015)-.02*Math.sin(x*.031)));ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fill();const fc=['#ff4466','#ffcc00','#ff8844','#cc44ff','#ffffff','#44ccff'];for(let i=0;i<80;i++){const fx=W*rng(),fy=H*(.58+rng()*.38);ctx.fillStyle=fc[Math.floor(rng()*fc.length)];ctx.beginPath();ctx.arc(fx,fy,1.5+rng()*2.5,0,Math.PI*2);ctx.fill();}}
+function drawWetland(ctx,W,H,rng){const sky=ctx.createLinearGradient(0,0,0,H*.5);sky.addColorStop(0,'#2a1a40');sky.addColorStop(.5,'#8a3060');sky.addColorStop(1,'#e87030');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);const water=ctx.createLinearGradient(0,H*.5,0,H);water.addColorStop(0,'#4a2860');water.addColorStop(1,'#1a1030');ctx.fillStyle=water;ctx.fillRect(0,H*.5,W,H);ctx.save();ctx.globalAlpha=.3;const ref=ctx.createLinearGradient(W*.3,H*.5,W*.7,H);ref.addColorStop(0,'#ff8844');ref.addColorStop(1,'rgba(255,136,68,0)');ctx.fillStyle=ref;ctx.beginPath();ctx.moveTo(W*.4,H*.5);ctx.lineTo(W*.6,H*.5);ctx.lineTo(W*.8,H);ctx.lineTo(W*.2,H);ctx.closePath();ctx.fill();ctx.restore();for(let i=0;i<30;i++){const rx=W*(.05+rng()*.9),ry=H*(.55+rng()*.3),rh=H*(.15+rng()*.2);ctx.strokeStyle=`rgba(20,10,5,${.7+rng()*.3})`;ctx.lineWidth=1.5+rng();ctx.beginPath();ctx.moveTo(rx,ry);ctx.lineTo(rx+(rng()-.5)*8,ry-rh);ctx.stroke();ctx.fillStyle='#3a2010';ctx.beginPath();ctx.ellipse(rx+(rng()-.5)*8,ry-rh,2,6,0,0,Math.PI*2);ctx.fill();}}
+function drawDesert(ctx,W,H,rng){const sky=ctx.createLinearGradient(0,0,0,H*.5);sky.addColorStop(0,'#1a2860');sky.addColorStop(.6,'#e06020');sky.addColorStop(1,'#f0a030');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);const sg=ctx.createRadialGradient(W*.75,H*.15,0,W*.75,H*.15,W*.15);sg.addColorStop(0,'#fffaaa');sg.addColorStop(.3,'#ffcc44');sg.addColorStop(1,'transparent');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H);const d1=ctx.createLinearGradient(0,H*.5,0,H);d1.addColorStop(0,'#d4884a');d1.addColorStop(1,'#a05820');ctx.fillStyle=d1;ctx.beginPath();ctx.moveTo(0,H);ctx.bezierCurveTo(W*.2,H*.48,W*.4,H*.52,W*.55,H*.44);ctx.bezierCurveTo(W*.7,H*.36,W*.85,H*.5,W,H*.42);ctx.lineTo(W,H);ctx.closePath();ctx.fill();ctx.fillStyle='#c07840';ctx.beginPath();ctx.moveTo(0,H);ctx.bezierCurveTo(W*.15,H*.62,W*.3,H*.58,W*.5,H*.65);ctx.bezierCurveTo(W*.7,H*.72,W*.85,H*.62,W,H*.68);ctx.lineTo(W,H);ctx.closePath();ctx.fill();for(let i=0;i<4;i++){const cx=W*(.1+i*.22+rng()*.05),cy=H*(.42+rng()*.1),ch=H*(.12+rng()*.1);ctx.fillStyle='#2d5a20';ctx.fillRect(cx-5,cy-ch,10,ch);ctx.fillRect(cx-15,cy-ch*.5-ch*.2,10,ch*.25);ctx.fillRect(cx+5,cy-ch*.5-ch*.15,10,ch*.2);}}
+function drawArctic(ctx,W,H,rng){const sky=ctx.createLinearGradient(0,0,0,H*.6);sky.addColorStop(0,'#030818');sky.addColorStop(.5,'#061830');sky.addColorStop(1,'#0a2840');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);for(let i=0;i<60;i++){const sx=W*rng(),sy=H*rng()*.6;ctx.fillStyle=`rgba(255,255,255,${.3+rng()*.7})`;ctx.beginPath();ctx.arc(sx,sy,rng()*1.3,0,Math.PI*2);ctx.fill();}ctx.save();[['rgba(0,255,128,.15)','rgba(0,200,255,.1)'],['rgba(128,0,255,.1)','rgba(0,255,128,.12)']].forEach(([c1,c2],ai)=>{const ag=ctx.createLinearGradient(0,H*(.1+ai*.15),W,H*(.35+ai*.1));ag.addColorStop(0,c1);ag.addColorStop(.5,c2);ag.addColorStop(1,'transparent');ctx.fillStyle=ag;ctx.beginPath();ctx.moveTo(0,H*(.1+ai*.12));for(let x=0;x<=W;x+=8)ctx.lineTo(x,H*(.1+ai*.12)+Math.sin(x*.02+ai)*H*.06);for(let x=W;x>=0;x-=8)ctx.lineTo(x,H*(.2+ai*.12)+Math.sin(x*.02+ai+1)*H*.04);ctx.closePath();ctx.fill();});ctx.restore();const snow=ctx.createLinearGradient(0,H*.6,0,H);snow.addColorStop(0,'#c8ddf0');snow.addColorStop(1,'#8aaac8');ctx.fillStyle=snow;ctx.fillRect(0,H*.6,W,H);ctx.fillStyle='#d8eaff';ctx.beginPath();ctx.moveTo(0,H*.6);for(let x=0;x<=W;x+=5)ctx.lineTo(x,H*(.6-.03*Math.sin(x*.025)-.015*Math.sin(x*.06)));ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fill();}
+function drawWaterfall(ctx,W,H,rng){const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#0a2010');bg.addColorStop(1,'#051008');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.6;for(let i=0;i<20;i++){const lx=W*(i/19),ly=H*(.05+rng()*.3),ls=W*(.06+rng()*.05);ctx.fillStyle=`hsl(${120+rng()*30},${50+rng()*30}%,${15+rng()*10}%)`;ctx.beginPath();ctx.ellipse(lx,ly,ls,ls*.5,(rng()-.5)*Math.PI,0,Math.PI*2);ctx.fill();}ctx.restore();ctx.fillStyle='#2a2520';ctx.beginPath();ctx.moveTo(W*.2,0);ctx.lineTo(W*.2,H*.6);ctx.bezierCurveTo(W*.25,H*.65,W*.3,H*.62,W*.35,H*.58);ctx.lineTo(W*.35,0);ctx.closePath();ctx.fill();ctx.fillStyle='#3a3028';ctx.beginPath();ctx.moveTo(W*.65,0);ctx.lineTo(W*.65,H*.58);ctx.bezierCurveTo(W*.7,H*.62,W*.75,H*.65,W*.8,H*.6);ctx.lineTo(W*.8,0);ctx.closePath();ctx.fill();ctx.save();ctx.globalAlpha=.2;const mist=ctx.createRadialGradient(W*.5,H*.65,0,W*.5,H*.65,W*.3);mist.addColorStop(0,'#aaddff');mist.addColorStop(1,'transparent');ctx.fillStyle=mist;ctx.fillRect(0,0,W,H);ctx.restore();for(let s=0;s<5;s++){const sx=W*(.32+s*.07+rng()*.02),wg=ctx.createLinearGradient(sx,0,sx,H*.65);wg.addColorStop(0,'rgba(160,210,255,.9)');wg.addColorStop(.7,'rgba(120,180,240,.6)');wg.addColorStop(1,'rgba(100,160,220,0)');ctx.fillStyle=wg;ctx.fillRect(sx-2,0,3+rng()*3,H*.65);}const pool=ctx.createLinearGradient(0,H*.62,0,H);pool.addColorStop(0,'#2a5580');pool.addColorStop(1,'#102a50');ctx.fillStyle=pool;ctx.fillRect(0,H*.62,W,H);}
 
 // ── FEED RENDER ──────────────────────────────────────────────────────────────
 
 function renderFeed() {
   const grid = document.getElementById('feed-grid');
   grid.innerHTML = '';
+  _batchCount = 0;
   appendFeedBatch();
   const page = document.getElementById('page-feed');
-  page.onscroll = () => {
-    if (page.scrollHeight - page.scrollTop - page.clientHeight < 400) {
-      appendFeedBatch();
-    }
-  };
+  page.onscroll = () => { if (page.scrollHeight - page.scrollTop - page.clientHeight < 400) appendFeedBatch(); };
 }
 
 let _batchCount = 0;
@@ -1305,18 +492,15 @@ function appendFeedBatch() {
     card.innerHTML = `
       <div class="card-art">
         <canvas id="cv-${uid}" width="${proj.wide ? 640 : 320}" height="${proj.wide ? 224 : 240}"></canvas>
+        <button class="card-art-edit" onclick="openScenePicker(${proj.id}, event)">✦ photo</button>
       </div>
       <div class="card-body">
         <div class="card-tag">${TAGS[proj.cat] || '📌 Task'}</div>
         <div class="card-title">${esc(proj.title)}</div>
-        <div class="subtasks" data-pid="${proj.id}">
-          ${proj.subtasks.map(s => `
-            <label class="subtask${s.done ? ' done' : ''}">
-              <input type="checkbox" ${s.done ? 'checked' : ''} onchange="toggleSubtask(${proj.id}, ${s.id}, this.checked)">
-              <span>${esc(s.text)}</span>
-            </label>
-          `).join('')}
+        <div class="subtasks" id="st-${uid}" data-pid="${proj.id}">
+          ${renderSubtaskRows(proj, uid)}
         </div>
+        ${renderAddTaskRow(proj.id, uid)}
         <div class="card-footer">
           <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
           <span class="progress-label">${done}/${proj.subtasks.length}</span>
@@ -1324,14 +508,80 @@ function appendFeedBatch() {
       </div>
     `;
     grid.appendChild(card);
+    setupDragDrop(card.querySelector(`#st-${uid}`), proj.id);
   });
 
   requestAnimationFrame(() => {
     grid.querySelectorAll('canvas[id^="cv-"]:not([data-drawn])').forEach(cv => {
-      const id = parseInt(cv.id.replace('cv-', ''));
+      const parts = cv.id.replace('cv-','').split('-');
+      const id = parseInt(parts[1]);
       const proj = projects.find(p => p.id === id);
       if (proj) { drawCardArt(cv, proj); cv.dataset.drawn = '1'; }
     });
+  });
+}
+
+function renderSubtaskRows(proj, uid) {
+  return proj.subtasks.map(s => `
+    <div class="subtask${s.done ? ' done' : ''}" draggable="true" data-sid="${s.id}">
+      <span class="drag-handle" title="Drag to reorder">⠿</span>
+      <input type="checkbox" ${s.done ? 'checked' : ''} onchange="toggleSubtask(${proj.id}, ${s.id}, this.checked)">
+      <span class="subtask-text">${esc(s.text)}</span>
+    </div>
+  `).join('');
+}
+
+function renderAddTaskRow(projId, uid) {
+  return `<div class="add-task-trigger" onclick="showAddTaskInput(${projId}, '${uid}', this)">
+    <span style="font-size:1rem;line-height:1">+</span> add task
+  </div>`;
+}
+
+function showAddTaskInput(projId, uid, trigger) {
+  trigger.hidden = true;
+  const row = document.createElement('div');
+  row.className = 'add-task-row';
+  row.innerHTML = `<input class="add-task-input" type="text" placeholder="New task…" maxlength="80" autofocus>
+    <button class="add-task-btn" onclick="commitAddTask(${projId}, '${uid}', this)">+</button>`;
+  trigger.parentNode.insertBefore(row, trigger);
+  const input = row.querySelector('input');
+  input.focus();
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') commitAddTask(projId, uid, row.querySelector('button')); if (e.key === 'Escape') { row.remove(); trigger.hidden = false; } });
+}
+
+function commitAddTask(projId, uid, btn) {
+  const input = btn.previousElementSibling;
+  const text = input.value.trim();
+  if (!text) return;
+  const proj = projects.find(p => p.id === projId);
+  if (!proj) return;
+  const newId = (proj.subtasks.reduce((mx,s)=>Math.max(mx,s.id),0)) + 1;
+  proj.subtasks.push({ id: newId, text, done: false });
+  saveData();
+  refreshAllCards(projId);
+  renderCalendar();
+}
+
+function refreshAllCards(projId) {
+  const proj = projects.find(p => p.id === projId);
+  if (!proj) return;
+  const done = proj.subtasks.filter(s => s.done).length;
+  const pct = proj.subtasks.length ? Math.round(done / proj.subtasks.length * 100) : 0;
+
+  document.querySelectorAll(`.subtasks[data-pid="${projId}"]`).forEach(stEl => {
+    const uid = stEl.id.replace('st-','');
+    stEl.innerHTML = renderSubtaskRows(proj, uid);
+    setupDragDrop(stEl, projId);
+    // re-show add task trigger (remove existing row first)
+    const existingRow = stEl.parentNode.querySelector('.add-task-row');
+    if (existingRow) existingRow.remove();
+    const trigger = stEl.parentNode.querySelector('.add-task-trigger');
+    if (trigger) trigger.hidden = false;
+    const card = stEl.closest('.card');
+    if (card) {
+      card.querySelector('.progress-fill').style.width = pct + '%';
+      card.querySelector('.progress-label').textContent = `${done}/${proj.subtasks.length}`;
+    }
   });
 }
 
@@ -1342,28 +592,109 @@ function toggleSubtask(projId, stId, checked) {
   if (!st) return;
   st.done = checked;
   saveData();
-  const done = proj.subtasks.filter(s => s.done).length;
-  const pct = proj.subtasks.length ? Math.round(done / proj.subtasks.length * 100) : 0;
-  // update all rendered copies of this project card
-  document.querySelectorAll(`.subtasks[data-pid="${projId}"]`).forEach(row => {
-    row.querySelectorAll('.subtask').forEach((el, i) => {
-      el.className = 'subtask' + (proj.subtasks[i]?.done ? ' done' : '');
-      el.querySelector('input').checked = proj.subtasks[i]?.done || false;
-    });
-    const card = row.closest('.card');
-    if (card) {
-      card.querySelector('.progress-fill').style.width = pct + '%';
-      card.querySelector('.progress-label').textContent = `${done}/${proj.subtasks.length}`;
-    }
-  });
+  refreshAllCards(projId);
   renderCalendar();
 }
 
-// ── MODAL ────────────────────────────────────────────────────────────────────
+// ── DRAG REORDER ─────────────────────────────────────────────────────────────
 
-function openModal() {
-  document.getElementById('modal').hidden = false;
+let dragSrc = null;
+
+function setupDragDrop(container, projId) {
+  container.querySelectorAll('.subtask').forEach(row => {
+    row.addEventListener('dragstart', e => {
+      dragSrc = row;
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    row.addEventListener('dragover', e => {
+      e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+      container.querySelectorAll('.subtask').forEach(r => r.classList.remove('drag-over'));
+      row.classList.add('drag-over');
+    });
+    row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
+    row.addEventListener('drop', e => {
+      e.preventDefault();
+      row.classList.remove('drag-over');
+      if (!dragSrc || dragSrc === row) return;
+      const srcId = parseInt(dragSrc.dataset.sid);
+      const dstId = parseInt(row.dataset.sid);
+      const proj = projects.find(p => p.id === projId);
+      if (!proj) return;
+      const si = proj.subtasks.findIndex(s => s.id === srcId);
+      const di = proj.subtasks.findIndex(s => s.id === dstId);
+      if (si === -1 || di === -1) return;
+      const [moved] = proj.subtasks.splice(si, 1);
+      proj.subtasks.splice(di, 0, moved);
+      saveData();
+      refreshAllCards(projId);
+    });
+    row.addEventListener('dragend', () => { container.querySelectorAll('.subtask').forEach(r => r.classList.remove('drag-over')); });
+  });
 }
+
+// ── SCENE PICKER ─────────────────────────────────────────────────────────────
+
+let pickerProjId = null;
+let pickerSelected = null;
+
+function openScenePicker(projId, evt) {
+  evt.stopPropagation();
+  pickerProjId = projId;
+  const proj = projects.find(p => p.id === projId);
+  pickerSelected = proj?.scene ?? (proj?.id % 8) ?? 0;
+
+  const grid = document.getElementById('scene-picker-grid');
+  grid.innerHTML = '';
+  SCENES.forEach((scene, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'scene-thumb' + (i === pickerSelected ? ' selected' : '');
+    thumb.onclick = () => { pickerSelected = i; grid.querySelectorAll('.scene-thumb').forEach((t,ti)=>t.classList.toggle('selected',ti===i)); };
+    const cv = document.createElement('canvas');
+    cv.width = 120; cv.height = 90;
+    const lbl = document.createElement('div');
+    lbl.className = 'scene-thumb-label';
+    lbl.textContent = SCENE_NAMES[i];
+    thumb.appendChild(cv);
+    thumb.appendChild(lbl);
+    grid.appendChild(thumb);
+    requestAnimationFrame(() => {
+      const rng = seededRand(i * 7919 + 31337);
+      drawScene(cv.getContext('2d'), 120, 90, scene, rng);
+    });
+  });
+
+  document.getElementById('scene-picker-modal').hidden = false;
+}
+
+function closeScenePicker() {
+  document.getElementById('scene-picker-modal').hidden = true;
+  pickerProjId = null; pickerSelected = null;
+}
+
+function confirmScenePicker() {
+  if (pickerProjId === null || pickerSelected === null) { closeScenePicker(); return; }
+  const proj = projects.find(p => p.id === pickerProjId);
+  if (proj) {
+    proj.scene = pickerSelected;
+    saveData();
+    // redraw all canvases for this project
+    document.querySelectorAll(`canvas[id^="cv-"]`).forEach(cv => {
+      const parts = cv.id.replace('cv-','').split('-');
+      if (parseInt(parts[1]) === pickerProjId) {
+        drawCardArt(cv, proj);
+      }
+    });
+  }
+  closeScenePicker();
+}
+
+document.getElementById('scene-picker-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('scene-picker-modal')) closeScenePicker();
+});
+
+// ── ADD PROJECT MODAL ─────────────────────────────────────────────────────────
+
+function openModal() { document.getElementById('modal').hidden = false; }
 function closeModal() {
   document.getElementById('modal').hidden = true;
   document.getElementById('new-title').value = '';
@@ -1374,73 +705,38 @@ function saveProject() {
   if (!title) { document.getElementById('new-title').focus(); return; }
   const cat = document.getElementById('new-cat').value;
   const stRaw = document.getElementById('new-subtasks').value.trim();
-  const subtasks = stRaw.split('\n').filter(s => s.trim()).map((s, i) => ({ id: i+1, text: s.trim(), done: false }));
+  const subtasks = stRaw.split('\n').filter(s => s.trim()).map((s,i) => ({id:i+1,text:s.trim(),done:false}));
   const id = Date.now();
-  projects.unshift({ id, title, cat, wide: false, subtasks });
-  saveData();
-  closeModal();
-  renderFeed();
-  renderCalendar();
+  projects.unshift({ id, title, cat, scene: id % 8, wide: false, subtasks });
+  saveData(); closeModal(); renderFeed(); renderCalendar();
 }
-document.getElementById('modal').addEventListener('click', e => {
-  if (e.target === document.getElementById('modal')) closeModal();
-});
+document.getElementById('modal').addEventListener('click', e => { if (e.target === document.getElementById('modal')) closeModal(); });
 
 // ── PRIORITIES ───────────────────────────────────────────────────────────────
 
-let priorities = { text: ['','',''], done: [false,false,false] };
+let priorities = { text:['','',''], done:[false,false,false] };
 let prioritiesEditing = false;
 
 function loadPriorities() {
-  try {
-    const p = localStorage.getItem('pf_priorities');
-    if (p) priorities = JSON.parse(p);
-  } catch(e) {}
+  try { const p = localStorage.getItem('pf_priorities'); if (p) priorities = JSON.parse(p); } catch(e) {}
 }
-
 function savePriorities() {
   try { localStorage.setItem('pf_priorities', JSON.stringify(priorities)); } catch(e) {}
 }
-
 function renderPriorities() {
   const el = document.getElementById('priorities-list');
   const btn = document.getElementById('pri-edit-btn');
   btn.textContent = prioritiesEditing ? 'Done' : 'Edit';
   btn.className = 'priorities-edit-btn' + (prioritiesEditing ? ' active' : '');
-
   el.innerHTML = [0,1,2].map(i => {
-    const text = priorities.text[i] || '';
-    const done = priorities.done[i];
-    if (prioritiesEditing) {
-      return `<div class="priority-row">
-        <span class="priority-num">${i+1}</span>
-        <input class="priority-input" type="text" value="${esc(text)}" placeholder="Add a priority…"
-          oninput="updatePriorityText(${i}, this.value)" maxlength="80">
-      </div>`;
-    }
-    return `<div class="priority-row">
-      <span class="priority-num">${i+1}</span>
-      <span class="priority-text${text ? (done ? ' done-text' : '') : ' empty'}">${text ? esc(text) : 'tap Edit to add…'}</span>
-      ${text ? `<button class="priority-check${done ? ' done' : ''}" onclick="togglePriorityDone(${i})">${done ? '✓' : ''}</button>` : ''}
-    </div>`;
+    const text = priorities.text[i] || '', done = priorities.done[i];
+    if (prioritiesEditing) return `<div class="priority-row"><span class="priority-num">${i+1}</span><input class="priority-input" type="text" value="${esc(text)}" placeholder="Add a priority…" oninput="updatePriorityText(${i},this.value)" maxlength="80"></div>`;
+    return `<div class="priority-row"><span class="priority-num">${i+1}</span><span class="priority-text${text?(done?' done-text':''):' empty'}">${text?esc(text):'tap Edit to add…'}</span>${text?`<button class="priority-check${done?' done':''}" onclick="togglePriorityDone(${i})">${done?'✓':''}</button>`:''}</div>`;
   }).join('');
 }
-
-function togglePrioritiesEdit() {
-  prioritiesEditing = !prioritiesEditing;
-  renderPriorities();
-}
-
-function updatePriorityText(i, val) {
-  priorities.text[i] = val;
-  savePriorities();
-}
-
-function togglePriorityDone(i) {
-  priorities.done[i] = !priorities.done[i];
-  savePriorities();
-  renderPriorities();
-}
+function togglePrioritiesEdit() { prioritiesEditing = !prioritiesEditing; renderPriorities(); }
+function updatePriorityText(i, val) { priorities.text[i] = val; savePriorities(); }
+function togglePriorityDone(i) { priorities.done[i] = !priorities.done[i]; savePriorities(); renderPriorities(); }
 
 // ── CALENDAR ─────────────────────────────────────────────────────────────────
 
@@ -1449,122 +745,219 @@ function getWeekDates(offset) {
   const dow = today.getDay();
   const mon = new Date(today);
   mon.setDate(today.getDate() - dow + 1 + offset * 7);
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(mon);
-    d.setDate(mon.getDate() + i);
-    return d;
-  });
+  return Array.from({length:7},(_,i)=>{ const d=new Date(mon); d.setDate(mon.getDate()+i); return d; });
 }
-
-function fmtKey(date) {
-  return date.toISOString().slice(0, 10);
-}
+function fmtKey(date) { return date.toISOString().slice(0,10); }
 
 function renderCalendar() {
   const days = getWeekDates(weekOffset);
   const today = fmtKey(new Date());
-  const daysEl = document.getElementById('days-row');
   const DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-
   if (!selectedDay) selectedDay = today;
 
-  // count tasks per day (all subtasks count as potential calendar items)
-  const allSubs = projects.flatMap(p => p.subtasks.map(s => ({ ...s, projId: p.id, projTitle: p.title, cat: p.cat })));
+  const allSubs = projects.flatMap(p => p.subtasks.map(s => ({...s, projId:p.id, projTitle:p.title, cat:p.cat, sceneIdx:p.scene??p.id%8})));
   const totalSubs = allSubs.length;
 
-  daysEl.innerHTML = days.map((d, i) => {
-    const key = fmtKey(d);
-    const isToday = key === today;
-    const isSel = key === selectedDay;
-    // how many cal-day-done for this day
-    const donedots = allSubs.filter(s => calDayDone[`${key}-${s.projId}-${s.id}`]).length;
-    const dots = Math.min(donedots, 3);
-    return `<div class="day-chip${isToday ? ' today' : isSel ? ' selected' : ''}" onclick="selectDay('${key}')">
+  document.getElementById('days-row').innerHTML = days.map((d,i) => {
+    const key = fmtKey(d), isToday = key===today, isSel = key===selectedDay;
+    const dots = Math.min(allSubs.filter(s => calDayDone[`${key}-${s.projId}-${s.id}`]).length, 3);
+    return `<div class="day-chip${isToday?' today':isSel?' selected':''}" onclick="selectDay('${key}')">
       <span class="day-name">${DAY_NAMES[i]}</span>
       <span class="day-num">${d.getDate()}</span>
-      <div class="dot-row">${Array(dots).fill('<div class="dot"></div>').join('')}</div>
+      <div class="dot-row">${'<div class="dot"></div>'.repeat(dots)}</div>
     </div>`;
   }).join('');
 
-  const selDate = new Date(selectedDay + 'T00:00:00');
-  const options = { weekday: 'long', month: 'long', day: 'numeric' };
-  document.getElementById('day-tasks-label').textContent = selDate.toLocaleDateString(undefined, options);
+  const selDate = new Date(selectedDay+'T00:00:00');
+  document.getElementById('day-tasks-label').textContent = selDate.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
 
-  // render tasks for selected day
-  const listEl = document.getElementById('day-task-list');
-  listEl.innerHTML = projects.flatMap(proj =>
+  document.getElementById('day-task-list').innerHTML = projects.flatMap(proj =>
     proj.subtasks.map(st => {
-      const key = `${selectedDay}-${proj.id}-${st.id}`;
-      const isDone = calDayDone[key] || false;
+      const key = `${selectedDay}-${proj.id}-${st.id}`, isDone = calDayDone[key]||false;
       return `<div class="day-task-card">
-        <div class="day-task-emoji">${['🌲','🌊','🏔','🌸','🌿','🏜','❄️','💧'][proj.id % 8]}</div>
-        <div class="day-task-info">
-          <div class="day-task-title">${esc(st.text)}</div>
-          <div class="day-task-sub">${esc(proj.title)}</div>
-        </div>
-        <button class="day-task-done${isDone ? ' done' : ''}" onclick="toggleCalDone('${selectedDay}',${proj.id},${st.id})" title="${isDone ? 'Mark undone' : 'Mark done'}">${isDone ? '✓' : ''}</button>
+        <div class="day-task-emoji">${CAL_ICONS[(proj.scene??proj.id%8)%8]}</div>
+        <div class="day-task-info"><div class="day-task-title">${esc(st.text)}</div><div class="day-task-sub">${esc(proj.title)}</div></div>
+        <button class="day-task-done${isDone?' done':''}" onclick="toggleCalDone('${selectedDay}',${proj.id},${st.id})">${isDone?'✓':''}</button>
       </div>`;
     })
   ).join('');
 
-  // stats
   const weekKeys = days.map(fmtKey);
   let weekDone = 0, weekTotal = 0;
-  weekKeys.forEach(k => {
-    allSubs.forEach(s => {
-      weekTotal++;
-      if (calDayDone[`${k}-${s.projId}-${s.id}`]) weekDone++;
-    });
-  });
+  weekKeys.forEach(k => allSubs.forEach(s => { weekTotal++; if(calDayDone[`${k}-${s.projId}-${s.id}`]) weekDone++; }));
 
-  // streak: consecutive days from today backwards with ≥1 done
   let streak = 0;
   const todayD = new Date();
-  for (let i = 0; i < 30; i++) {
-    const d = new Date(todayD);
-    d.setDate(todayD.getDate() - i);
-    const k = fmtKey(d);
-    const dayDone = allSubs.some(s => calDayDone[`${k}-${s.projId}-${s.id}`]);
-    if (dayDone) streak++;
-    else if (i > 0) break;
+  for (let i=0;i<30;i++) {
+    const d=new Date(todayD); d.setDate(todayD.getDate()-i);
+    if (allSubs.some(s=>calDayDone[`${fmtKey(d)}-${s.projId}-${s.id}`])) streak++;
+    else if (i>0) break;
   }
 
   document.getElementById('stat-done').textContent = weekDone;
   document.getElementById('stat-total').textContent = totalSubs;
   document.getElementById('stat-streak').textContent = streak;
 
-  // streak bar
-  const streakEl = document.getElementById('streak-row');
-  streakEl.innerHTML = days.map((d, i) => {
-    const k = fmtKey(d);
-    const dc = allSubs.filter(s => calDayDone[`${k}-${s.projId}-${s.id}`]).length;
-    const pct = totalSubs ? Math.round(dc / allSubs.length * 100) : 0;
-    return `<div class="streak-day">
-      <div class="fill" style="height:${pct}%"></div>
-      <span class="lbl">${DAY_NAMES[i][0]}</span>
-    </div>`;
+  document.getElementById('streak-row').innerHTML = days.map((d,i) => {
+    const k=fmtKey(d), dc=allSubs.filter(s=>calDayDone[`${k}-${s.projId}-${s.id}`]).length;
+    const pct = totalSubs ? Math.round(dc/allSubs.length*100) : 0;
+    return `<div class="streak-day"><div class="fill" style="height:${pct}%"></div><span class="lbl">${DAY_NAMES[i][0]}</span></div>`;
   }).join('');
 
-  const mon = days[0], sun = days[6];
-  const fmt = d => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-  document.getElementById('week-label').textContent = `${fmt(mon)} – ${fmt(sun)}`;
+  const fmt = d => d.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  document.getElementById('week-label').textContent = `${fmt(days[0])} – ${fmt(days[6])}`;
+
+  renderWeeklyReview();
 }
 
-function selectDay(key) {
-  selectedDay = key;
-  renderCalendar();
+function selectDay(key) { selectedDay = key; renderCalendar(); }
+function shiftWeek(dir) { weekOffset += dir; renderCalendar(); }
+function toggleCalDone(day, projId, stId) { const key=`${day}-${projId}-${stId}`; calDayDone[key]=!calDayDone[key]; saveData(); renderCalendar(); }
+
+// ── WEEKLY REVIEW ─────────────────────────────────────────────────────────────
+
+const WR_STEPS = [
+  {
+    key: 'capture',
+    name: 'Capture',
+    sub: 'Get it all out of your head',
+    checks: [
+      'Write down any loose ideas, commitments, or tasks floating in your mind',
+      'Check your notes app, voice memos, and email drafts for anything to process',
+      'Collect any physical papers or receipts',
+    ],
+    notesPlaceholder: 'What's been on your mind this week?'
+  },
+  {
+    key: 'clarify',
+    name: 'Clarify',
+    sub: 'Process what you've captured',
+    checks: [
+      'Clear your email inbox to zero (or at least triage)',
+      'Decide on each captured item: do, delegate, defer, or delete',
+    ],
+    notesPlaceholder: 'Any decisions or clarifications to note?'
+  },
+  {
+    key: 'organize',
+    name: 'Organize',
+    sub: 'Put things where they belong',
+    checks: [
+      'Review all your projects — is everything up to date?',
+      'Add any new tasks to the right project cards above',
+      'Archive or close anything that\'s completed or no longer relevant',
+    ],
+    notesPlaceholder: 'What changed in your project list?'
+  },
+  {
+    key: 'reflect',
+    name: 'Reflect',
+    sub: 'Review your progress',
+    checks: [
+      'What went well this week? Celebrate the wins.',
+      'What didn\'t get done — and why? No judgment, just honest.',
+    ],
+    notesPlaceholder: 'Wins, lessons, anything worth noting…'
+  },
+  {
+    key: 'plan',
+    name: 'Plan',
+    sub: 'Set intentions for next week',
+    checks: [
+      'Choose your 3 focus priorities for next week (update them above)',
+      'Block time for your most important work',
+      'Identify anything you\'re dreading — and schedule it first',
+    ],
+    notesPlaceholder: 'What are you committing to next week?'
+  },
+];
+
+function getWRKey() {
+  const days = getWeekDates(weekOffset);
+  return 'wr-' + fmtKey(days[0]);
 }
 
-function shiftWeek(dir) {
-  weekOffset += dir;
-  renderCalendar();
+function loadWRData() {
+  try { const d = localStorage.getItem(getWRKey()); return d ? JSON.parse(d) : null; } catch(e) { return null; }
+}
+function saveWRData(data) {
+  try { localStorage.setItem(getWRKey(), JSON.stringify(data)); } catch(e) {}
+}
+function defaultWRData() {
+  const sections = {};
+  WR_STEPS.forEach(s => { sections[s.key] = { checks: s.checks.map(()=>false), notes: '' }; });
+  return { sections, completed: false };
 }
 
-function toggleCalDone(day, projId, stId) {
-  const key = `${day}-${projId}-${stId}`;
-  calDayDone[key] = !calDayDone[key];
-  saveData();
-  renderCalendar();
+let wrOpen = false;
+
+function toggleWR() {
+  wrOpen = !wrOpen;
+  document.getElementById('wr-body').hidden = !wrOpen;
+  document.getElementById('wr-chevron').className = 'wr-chevron' + (wrOpen ? ' open' : '');
+}
+
+function renderWeeklyReview() {
+  const data = loadWRData() || defaultWRData();
+  const totalChecks = WR_STEPS.reduce((n,s) => n + s.checks.length, 0);
+  const doneChecks = WR_STEPS.reduce((n,s) => n + data.sections[s.key].checks.filter(Boolean).length, 0);
+  const stepsComplete = WR_STEPS.filter(s => data.sections[s.key].checks.every(Boolean)).length;
+
+  document.getElementById('wr-badge').textContent = `${stepsComplete}/${WR_STEPS.length}`;
+
+  document.getElementById('wr-progress').innerHTML = WR_STEPS.map(s =>
+    `<div class="wr-prog-seg${data.sections[s.key].checks.every(Boolean) ? ' done' : ''}"></div>`
+  ).join('');
+
+  document.getElementById('wr-steps').innerHTML = WR_STEPS.map((step, si) => {
+    const sec = data.sections[step.key];
+    const stepDone = sec.checks.every(Boolean);
+    return `
+      <div class="wr-step">
+        <div class="wr-step-header">
+          <div class="wr-step-num${stepDone ? ' done' : ''}">${stepDone ? '✓' : si+1}</div>
+          <div>
+            <div class="wr-step-name">${step.name}</div>
+            <div class="wr-step-sub">${step.sub}</div>
+          </div>
+        </div>
+        <div class="wr-step-body">
+          ${step.checks.map((chk, ci) => `
+            <label class="wr-check-row${sec.checks[ci] ? ' checked' : ''}">
+              <input type="checkbox" ${sec.checks[ci] ? 'checked' : ''} onchange="toggleWRCheck('${step.key}',${ci},this.checked)">
+              <span>${chk}</span>
+            </label>
+          `).join('')}
+          <textarea class="wr-notes" placeholder="${step.notesPlaceholder}" oninput="saveWRNotes('${step.key}',this.value)">${esc(sec.notes)}</textarea>
+        </div>
+        ${si < WR_STEPS.length-1 ? '<div class="wr-step-divider"></div>' : ''}
+      </div>
+    `;
+  }).join('');
+
+  const btn = document.getElementById('wr-complete-btn');
+  btn.textContent = data.completed ? '✓ Week reviewed!' : 'Mark week as reviewed ✓';
+  btn.className = 'wr-complete-btn' + (data.completed ? ' completed' : '');
+}
+
+function toggleWRCheck(stepKey, ci, val) {
+  const data = loadWRData() || defaultWRData();
+  data.sections[stepKey].checks[ci] = val;
+  saveWRData(data);
+  renderWeeklyReview();
+}
+
+function saveWRNotes(stepKey, val) {
+  const data = loadWRData() || defaultWRData();
+  data.sections[stepKey].notes = val;
+  saveWRData(data);
+}
+
+function markWRComplete() {
+  const data = loadWRData() || defaultWRData();
+  data.completed = !data.completed;
+  saveWRData(data);
+  renderWeeklyReview();
 }
 
 // ── TABS ─────────────────────────────────────────────────────────────────────
@@ -1572,14 +965,12 @@ function toggleCalDone(day, projId, stId) {
 function switchTab(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('page-'+name).classList.add('active');
   btn.classList.add('active');
   if (name === 'calendar') { renderCalendar(); renderPriorities(); }
 }
 
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 loadData();
