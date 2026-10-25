@@ -135,7 +135,27 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 }
 .add-task-trigger:hover { opacity: 1; }
 
-.card-footer { margin-top: 10px; display: flex; align-items: center; justify-content: space-between; }
+/* CARD INFO BAR */
+.card-info-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);
+}
+.card-info-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.info-chip {
+  font-size: 0.68rem; font-weight: 600; color: var(--fg2);
+  background: var(--surface2); border-radius: 20px; padding: 3px 9px;
+  display: flex; align-items: center; gap: 4px; white-space: nowrap;
+}
+.info-chip.has-data { color: var(--accent); background: rgba(61,122,92,.1); }
+.card-detail-btn {
+  font-size: 0.72rem; font-weight: 600; color: var(--accent);
+  background: none; border: 1.5px solid var(--accent); border-radius: 8px;
+  padding: 4px 10px; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: all .15s;
+}
+.card-detail-btn:hover { background: var(--accent); color: #fff; }
+
+.card-footer { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; }
 .progress-bar { height: 3px; flex: 1; background: var(--border); border-radius: 2px; overflow: hidden; margin-right: 8px; }
 .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .4s ease; }
 .progress-label { font-size: 0.65rem; color: var(--fg2); white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -152,6 +172,144 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .modal-actions { display: flex; gap: 10px; }
 .btn-cancel { flex: 1; background: var(--surface2); border: none; border-radius: 12px; padding: 12px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; color: var(--fg2); cursor: pointer; }
 .btn-save { flex: 2; background: var(--accent); border: none; border-radius: 12px; padding: 12px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; color: #fff; cursor: pointer; }
+
+/* PROJECT DETAIL SHEET */
+.detail-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.detail-overlay[hidden] { display: none !important; }
+.detail-sheet {
+  background: var(--surface); width: 100%; max-width: 520px;
+  border-radius: 22px 22px 0 0;
+  max-height: 92dvh; display: flex; flex-direction: column;
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+}
+.detail-handle {
+  width: 36px; height: 4px; background: var(--border); border-radius: 2px;
+  margin: 12px auto 0;
+}
+.detail-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 0;
+}
+.detail-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.detail-close {
+  background: var(--surface2); border: none; border-radius: 50%;
+  width: 30px; height: 30px; font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; color: var(--fg2); flex-shrink: 0;
+}
+.detail-tabs {
+  display: flex; border-bottom: 1px solid var(--border); padding: 0 20px; margin-top: 14px; gap: 0;
+}
+.detail-tab {
+  flex: 1; background: none; border: none; border-bottom: 2.5px solid transparent;
+  padding: 9px 4px; font-family: var(--font-body); font-size: 0.78rem; font-weight: 600;
+  color: var(--fg2); cursor: pointer; transition: color .15s; letter-spacing: .02em;
+}
+.detail-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.detail-body {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 16px 20px;
+}
+.detail-section { display: none; }
+.detail-section.active { display: block; }
+
+/* NOTES SECTION */
+.detail-notes-area {
+  width: 100%; background: var(--surface2); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 10px 12px; font-family: var(--font-body);
+  font-size: 0.85rem; color: var(--fg); outline: none; resize: none; min-height: 100px;
+  transition: border-color .15s; margin-bottom: 14px;
+}
+.detail-notes-area:focus { border-color: var(--accent); }
+.detail-screenshot {
+  width: 100%; border-radius: 12px; object-fit: cover; max-height: 200px;
+  display: block; margin-bottom: 10px; border: 1px solid var(--border);
+}
+.upload-btn {
+  display: flex; align-items: center; gap: 8px; justify-content: center;
+  width: 100%; padding: 11px; background: var(--surface2); border: 1.5px dashed var(--border);
+  border-radius: 12px; font-family: var(--font-body); font-size: 0.82rem;
+  font-weight: 600; color: var(--fg2); cursor: pointer; transition: border-color .15s;
+}
+.upload-btn:hover { border-color: var(--accent); color: var(--accent); }
+.remove-screenshot {
+  background: none; border: none; color: var(--fg2); font-size: 0.72rem;
+  cursor: pointer; padding: 0 0 10px; display: block; text-align: right; width: 100%;
+}
+
+/* LINKS SECTION */
+.detail-link-item {
+  display: flex; align-items: center; gap: 8px; padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.detail-link-item:last-child { border-bottom: none; }
+.detail-link-favicon { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; font-size: 1rem; line-height: 1; }
+.detail-link-info { flex: 1; min-width: 0; }
+.detail-link-label { font-size: 0.82rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.detail-link-url { font-size: 0.7rem; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.detail-item-del {
+  background: none; border: none; color: var(--border); font-size: 1.1rem; cursor: pointer;
+  padding: 4px; flex-shrink: 0; line-height: 1; transition: color .15s;
+}
+.detail-item-del:hover { color: #e05050; }
+
+/* PEOPLE SECTION */
+.detail-person-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.detail-person-item:last-child { border-bottom: none; }
+.person-avatar {
+  width: 38px; height: 38px; border-radius: 50%; background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0; font-weight: 700; color: var(--accent);
+  border: 1px solid var(--border);
+}
+.person-info { flex: 1; min-width: 0; }
+.person-name { font-size: 0.85rem; font-weight: 600; }
+.person-role { font-size: 0.72rem; color: var(--fg2); }
+.person-platform {
+  font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 20px;
+  background: var(--surface2); color: var(--fg2); white-space: nowrap; flex-shrink: 0;
+}
+.platform-whatsapp { background: #e8f5e3; color: #25d366; }
+.platform-imessage { background: #e3f0fc; color: #007aff; }
+.platform-email { background: #fef3e2; color: #e07a3f; }
+.platform-slack { background: #f0e8f8; color: #611f69; }
+.platform-telegram { background: #e3f4fc; color: #0088cc; }
+.platform-instagram { background: #fde8f3; color: #e1306c; }
+.platform-line { background: #e3f5e3; color: #06c755; }
+
+/* ADD ITEM FORM (links + people) */
+.add-item-form {
+  background: var(--surface2); border-radius: 14px; padding: 14px;
+  margin-top: 12px; display: flex; flex-direction: column; gap: 9px;
+}
+.add-item-form input, .add-item-form select {
+  width: 100%; background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 9px 12px; font-family: var(--font-body);
+  font-size: 0.85rem; color: var(--fg); outline: none; transition: border-color .15s;
+}
+.add-item-form input:focus, .add-item-form select:focus { border-color: var(--accent); }
+.add-item-actions { display: flex; gap: 8px; }
+.btn-add-item {
+  flex: 2; background: var(--accent); color: #fff; border: none; border-radius: 10px;
+  padding: 10px; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; cursor: pointer;
+}
+.btn-cancel-item {
+  flex: 1; background: var(--border); color: var(--fg2); border: none; border-radius: 10px;
+  padding: 10px; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; cursor: pointer;
+}
+.add-trigger-btn {
+  display: flex; align-items: center; gap: 6px; justify-content: center;
+  width: 100%; padding: 10px; background: none; border: 1.5px dashed var(--border);
+  border-radius: 12px; font-family: var(--font-body); font-size: 0.82rem;
+  font-weight: 600; color: var(--fg2); cursor: pointer; margin-top: 10px;
+  transition: border-color .15s; color: var(--fg2);
+}
+.add-trigger-btn:hover { border-color: var(--accent); color: var(--accent); }
 
 /* SCENE PICKER */
 #scene-picker-modal .modal { max-height: 70vh; overflow-y: auto; }
@@ -384,6 +542,70 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   </div>
 </div>
 
+<!-- PROJECT DETAIL SHEET -->
+<div class="detail-overlay" id="detail-overlay" hidden>
+  <div class="detail-sheet" id="detail-sheet">
+    <div class="detail-handle"></div>
+    <div class="detail-header">
+      <div class="detail-title" id="detail-title"></div>
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="detail-tabs">
+      <button class="detail-tab active" onclick="switchDetailTab('notes',this)">Last Left Off</button>
+      <button class="detail-tab" onclick="switchDetailTab('links',this)">Links</button>
+      <button class="detail-tab" onclick="switchDetailTab('people',this)">People</button>
+    </div>
+    <div class="detail-body">
+      <!-- NOTES TAB -->
+      <div class="detail-section active" id="detail-section-notes">
+        <textarea class="detail-notes-area" id="detail-notes" placeholder="Where did you leave off? What's the current status? Any context for next time…" oninput="saveDetailNotes()"></textarea>
+        <div id="detail-screenshot-wrap"></div>
+        <label class="upload-btn" for="screenshot-upload">
+          <span>📷</span> Add screenshot or photo
+        </label>
+        <input type="file" id="screenshot-upload" accept="image/*" style="display:none" onchange="handleScreenshotUpload(this)">
+      </div>
+      <!-- LINKS TAB -->
+      <div class="detail-section" id="detail-section-links">
+        <div id="detail-links-list"></div>
+        <button class="add-trigger-btn" id="add-link-trigger" onclick="showAddLinkForm()">+ Add link</button>
+        <div class="add-item-form" id="add-link-form" hidden>
+          <input type="text" id="link-label-input" placeholder="Label (e.g. Contractor quote)" maxlength="60">
+          <input type="url" id="link-url-input" placeholder="https://…" inputmode="url">
+          <div class="add-item-actions">
+            <button class="btn-cancel-item" onclick="hideAddLinkForm()">Cancel</button>
+            <button class="btn-add-item" onclick="commitAddLink()">Add link</button>
+          </div>
+        </div>
+      </div>
+      <!-- PEOPLE TAB -->
+      <div class="detail-section" id="detail-section-people">
+        <div id="detail-people-list"></div>
+        <button class="add-trigger-btn" id="add-person-trigger" onclick="showAddPersonForm()">+ Add person</button>
+        <div class="add-item-form" id="add-person-form" hidden>
+          <input type="text" id="person-name-input" placeholder="Name" maxlength="60">
+          <input type="text" id="person-role-input" placeholder="Role / relationship (e.g. Contractor)" maxlength="60">
+          <select id="person-platform-input">
+            <option value="whatsapp">WhatsApp</option>
+            <option value="imessage">iMessage</option>
+            <option value="email">Email</option>
+            <option value="slack">Slack</option>
+            <option value="telegram">Telegram</option>
+            <option value="instagram">Instagram DM</option>
+            <option value="line">Line</option>
+            <option value="other">Other</option>
+          </select>
+          <input type="text" id="person-contact-input" placeholder="Contact (number, handle, or email)" maxlength="80">
+          <div class="add-item-actions">
+            <button class="btn-cancel-item" onclick="hideAddPersonForm()">Cancel</button>
+            <button class="btn-add-item" onclick="commitAddPerson()">Add person</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- SCENE PICKER MODAL -->
 <div class="modal-overlay" id="scene-picker-modal" hidden>
   <div class="modal" id="scene-picker-modal-inner">
@@ -425,19 +647,32 @@ function saveData() {
 function seedData() {
   projects = [
     { id:1, title:'Xavierville Rental Unit', cat:'finance', scene:0, wide:false,
-      subtasks:[{id:1,text:'Pay November rent',done:true},{id:2,text:'Fix leaky faucet',done:false},{id:3,text:'Review lease renewal',done:false}] },
+      subtasks:[{id:1,text:'Pay November rent',done:true},{id:2,text:'Fix leaky faucet',done:false},{id:3,text:'Review lease renewal',done:false}],
+      notes:'', screenshot:null, links:[], people:[] },
     { id:2, title:'Renovation', cat:'home', scene:3, wide:false,
-      subtasks:[{id:1,text:'Pay contractor deposit',done:false},{id:2,text:'Pick tile samples',done:true},{id:3,text:'Approve floor plan',done:false}] },
+      subtasks:[{id:1,text:'Pay contractor deposit',done:false},{id:2,text:'Pick tile samples',done:true},{id:3,text:'Approve floor plan',done:false}],
+      notes:'', screenshot:null, links:[], people:[] },
     { id:3, title:'Family Business Class', cat:'family', scene:2, wide:true,
-      subtasks:[{id:1,text:'Talk to mom about curriculum',done:false},{id:2,text:'Book meeting room',done:true},{id:3,text:'Prepare agenda',done:false},{id:4,text:'Send invites',done:false}] },
+      subtasks:[{id:1,text:'Talk to mom about curriculum',done:false},{id:2,text:'Book meeting room',done:true},{id:3,text:'Prepare agenda',done:false},{id:4,text:'Send invites',done:false}],
+      notes:'', screenshot:null, links:[], people:[] },
     { id:4, title:'Health & Fitness', cat:'health', scene:1, wide:false,
-      subtasks:[{id:1,text:'Sign up for yoga class',done:true},{id:2,text:'Buy new running shoes',done:false}] },
+      subtasks:[{id:1,text:'Sign up for yoga class',done:true},{id:2,text:'Buy new running shoes',done:false}],
+      notes:'', screenshot:null, links:[], people:[] },
     { id:5, title:'Creative Side Project', cat:'creative', scene:7, wide:false,
-      subtasks:[{id:1,text:'Sketch logo concepts',done:false},{id:2,text:'Write brand brief',done:false},{id:3,text:'Set up Figma board',done:true}] },
+      subtasks:[{id:1,text:'Sketch logo concepts',done:false},{id:2,text:'Write brand brief',done:false},{id:3,text:'Set up Figma board',done:true}],
+      notes:'', screenshot:null, links:[], people:[] },
     { id:6, title:'Work Emails & Admin', cat:'work', scene:5, wide:false,
-      subtasks:[{id:1,text:'Reply to client proposal',done:true},{id:2,text:'Update project tracker',done:true},{id:3,text:'Schedule Q4 review',done:false}] },
+      subtasks:[{id:1,text:'Reply to client proposal',done:true},{id:2,text:'Update project tracker',done:true},{id:3,text:'Schedule Q4 review',done:false}],
+      notes:'', screenshot:null, links:[], people:[] },
   ];
   saveData();
+}
+
+function ensureDetailFields(proj) {
+  if (!proj.notes) proj.notes = '';
+  if (proj.screenshot === undefined) proj.screenshot = null;
+  if (!proj.links) proj.links = [];
+  if (!proj.people) proj.people = [];
 }
 
 // ── CANVAS ART ──────────────────────────────────────────────────────────────
@@ -495,8 +730,10 @@ function appendFeedBatch() {
   const grid = document.getElementById('feed-grid');
   const batchId = _batchCount++;
   projects.forEach(proj => {
+    ensureDetailFields(proj);
     const done = proj.subtasks.filter(s => s.done).length;
     const pct = proj.subtasks.length ? Math.round(done / proj.subtasks.length * 100) : 0;
+    const hasLinks = proj.links.length > 0, hasPeople = proj.people.length > 0, hasNotes = !!proj.notes || !!proj.screenshot;
     const card = document.createElement('div');
     card.className = 'card' + (proj.wide ? ' wide' : '');
     const uid = `${batchId}-${proj.id}`;
@@ -512,6 +749,14 @@ function appendFeedBatch() {
           ${renderSubtaskRows(proj, uid)}
         </div>
         ${renderAddTaskRow(proj.id, uid)}
+        <div class="card-info-bar" data-pid="${proj.id}">
+          <div class="card-info-chips">
+            <span class="info-chip${hasNotes?' has-data':''}">📝 Notes</span>
+            <span class="info-chip${hasLinks?' has-data':''}">🔗 ${proj.links.length || 'Links'}</span>
+            <span class="info-chip${hasPeople?' has-data':''}">👤 ${proj.people.length || 'People'}</span>
+          </div>
+          <button class="card-detail-btn" onclick="openDetail(${proj.id})">Details →</button>
+        </div>
         <div class="card-footer">
           <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
           <span class="progress-label">${done}/${proj.subtasks.length}</span>
@@ -689,6 +934,204 @@ function setupDragDrop(container, projId) {
       proj.subtasks.splice(di, 0, moved);
       saveData();
       refreshAllCards(projId);
+    });
+  });
+}
+
+// ── PROJECT DETAIL SHEET ─────────────────────────────────────────────────────
+
+let detailProjId = null;
+const PLATFORM_LABELS = { whatsapp:'WhatsApp', imessage:'iMessage', email:'Email', slack:'Slack', telegram:'Telegram', instagram:'Instagram DM', line:'Line', other:'Other' };
+
+function openDetail(projId) {
+  detailProjId = projId;
+  const proj = projects.find(p => p.id === projId);
+  if (!proj) return;
+  ensureDetailFields(proj);
+  document.getElementById('detail-title').textContent = proj.title;
+  // Default to notes tab
+  switchDetailTab('notes', document.querySelector('.detail-tab'));
+  renderDetailNotes(proj);
+  renderDetailLinks(proj);
+  renderDetailPeople(proj);
+  document.getElementById('detail-overlay').hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDetail() {
+  document.getElementById('detail-overlay').hidden = true;
+  document.body.style.overflow = '';
+  detailProjId = null;
+  refreshFeedInfoBars();
+}
+
+document.getElementById('detail-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('detail-overlay')) closeDetail();
+});
+
+function switchDetailTab(name, btn) {
+  document.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.detail-section').forEach(s => s.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  else { const tabs = document.querySelectorAll('.detail-tab'); if (tabs[0]) tabs[0].classList.add('active'); }
+  const sec = document.getElementById('detail-section-' + name);
+  if (sec) sec.classList.add('active');
+}
+
+// NOTES
+function renderDetailNotes(proj) {
+  document.getElementById('detail-notes').value = proj.notes || '';
+  const wrap = document.getElementById('detail-screenshot-wrap');
+  if (proj.screenshot) {
+    wrap.innerHTML = `<img class="detail-screenshot" src="${proj.screenshot}" alt="screenshot">
+      <button class="remove-screenshot" onclick="removeScreenshot()">✕ Remove screenshot</button>`;
+  } else {
+    wrap.innerHTML = '';
+  }
+}
+
+function saveDetailNotes() {
+  if (!detailProjId) return;
+  const proj = projects.find(p => p.id === detailProjId);
+  if (!proj) return;
+  proj.notes = document.getElementById('detail-notes').value;
+  saveData();
+}
+
+function handleScreenshotUpload(input) {
+  if (!input.files || !input.files[0] || !detailProjId) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    // Compress by drawing to a canvas
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 800;
+      const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+      const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+      const cv = document.createElement('canvas');
+      cv.width = w; cv.height = h;
+      cv.getContext('2d').drawImage(img, 0, 0, w, h);
+      const dataUri = cv.toDataURL('image/jpeg', 0.75);
+      const proj = projects.find(p => p.id === detailProjId);
+      if (proj) { proj.screenshot = dataUri; saveData(); renderDetailNotes(proj); }
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function removeScreenshot() {
+  const proj = projects.find(p => p.id === detailProjId);
+  if (!proj) return;
+  proj.screenshot = null; saveData(); renderDetailNotes(proj);
+}
+
+// LINKS
+function renderDetailLinks(proj) {
+  const list = document.getElementById('detail-links-list');
+  if (!proj.links.length) { list.innerHTML = '<p style="font-size:0.82rem;color:var(--fg2);text-align:center;padding:20px 0">No links yet — add important URLs, docs, or references</p>'; return; }
+  list.innerHTML = proj.links.map(lnk => `
+    <div class="detail-link-item">
+      <span class="detail-link-favicon">🔗</span>
+      <div class="detail-link-info">
+        <div class="detail-link-label">${esc(lnk.label)}</div>
+        <a class="detail-link-url" href="${esc(lnk.url)}" target="_blank" rel="noopener">${esc(lnk.url)}</a>
+      </div>
+      <button class="detail-item-del" onclick="deleteLink(${lnk.id})" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+function showAddLinkForm() {
+  document.getElementById('add-link-trigger').hidden = true;
+  document.getElementById('add-link-form').hidden = false;
+  document.getElementById('link-label-input').focus();
+}
+function hideAddLinkForm() {
+  document.getElementById('add-link-trigger').hidden = false;
+  document.getElementById('add-link-form').hidden = true;
+  document.getElementById('link-label-input').value = '';
+  document.getElementById('link-url-input').value = '';
+}
+function commitAddLink() {
+  const label = document.getElementById('link-label-input').value.trim();
+  const url = document.getElementById('link-url-input').value.trim();
+  if (!url) { document.getElementById('link-url-input').focus(); return; }
+  const proj = projects.find(p => p.id === detailProjId);
+  if (!proj) return;
+  const id = Date.now();
+  proj.links.push({ id, label: label || url, url: url.startsWith('http') ? url : 'https://' + url });
+  saveData(); hideAddLinkForm(); renderDetailLinks(proj);
+}
+function deleteLink(linkId) {
+  const proj = projects.find(p => p.id === detailProjId);
+  if (!proj) return;
+  proj.links = proj.links.filter(l => l.id !== linkId);
+  saveData(); renderDetailLinks(proj);
+}
+
+// PEOPLE
+function renderDetailPeople(proj) {
+  const list = document.getElementById('detail-people-list');
+  if (!proj.people.length) { list.innerHTML = '<p style="font-size:0.82rem;color:var(--fg2);text-align:center;padding:20px 0">No people yet — track who\'s involved and where you message them</p>'; return; }
+  list.innerHTML = proj.people.map(p => {
+    const initials = p.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const plat = p.platform || 'other';
+    return `
+    <div class="detail-person-item">
+      <div class="person-avatar">${initials}</div>
+      <div class="person-info">
+        <div class="person-name">${esc(p.name)}</div>
+        <div class="person-role">${esc(p.role)}${p.contact ? ' · ' + esc(p.contact) : ''}</div>
+      </div>
+      <span class="person-platform platform-${plat}">${PLATFORM_LABELS[plat]||plat}</span>
+      <button class="detail-item-del" onclick="deletePerson(${p.id})" title="Remove">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function showAddPersonForm() {
+  document.getElementById('add-person-trigger').hidden = true;
+  document.getElementById('add-person-form').hidden = false;
+  document.getElementById('person-name-input').focus();
+}
+function hideAddPersonForm() {
+  document.getElementById('add-person-trigger').hidden = false;
+  document.getElementById('add-person-form').hidden = true;
+  ['person-name-input','person-role-input','person-contact-input'].forEach(id => document.getElementById(id).value = '');
+}
+function commitAddPerson() {
+  const name = document.getElementById('person-name-input').value.trim();
+  if (!name) { document.getElementById('person-name-input').focus(); return; }
+  const proj = projects.find(p => p.id === detailProjId);
+  if (!proj) return;
+  proj.people.push({
+    id: Date.now(),
+    name,
+    role: document.getElementById('person-role-input').value.trim(),
+    platform: document.getElementById('person-platform-input').value,
+    contact: document.getElementById('person-contact-input').value.trim(),
+  });
+  saveData(); hideAddPersonForm(); renderDetailPeople(proj);
+}
+function deletePerson(personId) {
+  const proj = projects.find(p => p.id === detailProjId);
+  if (!proj) return;
+  proj.people = proj.people.filter(p => p.id !== personId);
+  saveData(); renderDetailPeople(proj);
+}
+
+function refreshFeedInfoBars() {
+  projects.forEach(proj => {
+    ensureDetailFields(proj);
+    const hasLinks = proj.links.length > 0, hasPeople = proj.people.length > 0, hasNotes = !!proj.notes || !!proj.screenshot;
+    document.querySelectorAll(`.card-info-bar[data-pid="${proj.id}"]`).forEach(bar => {
+      const chips = bar.querySelectorAll('.info-chip');
+      if (chips[0]) { chips[0].className = 'info-chip' + (hasNotes?' has-data':''); }
+      if (chips[1]) { chips[1].className = 'info-chip' + (hasLinks?' has-data':''); chips[1].textContent = '🔗 ' + (proj.links.length || 'Links'); }
+      if (chips[2]) { chips[2].className = 'info-chip' + (hasPeople?' has-data':''); chips[2].textContent = '👤 ' + (proj.people.length || 'People'); }
     });
   });
 }
